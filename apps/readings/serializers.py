@@ -1,8 +1,6 @@
-from random import choice, sample
-
 from rest_framework import serializers
-
 from apps.cards.models import TarotCard
+from apps.cards.serializers import TarotCardSerializer
 from .models import Reading
 
 SPREAD_CARD_COUNTS = {
@@ -12,11 +10,26 @@ SPREAD_CARD_COUNTS = {
 }
 
 
+class DrawnCardSerializer(serializers.Serializer):
+    card = TarotCardSerializer()
+    position = serializers.IntegerField()
+    reversed = serializers.BooleanField()
+
+
 class ReadingSerializer(serializers.ModelSerializer):
+    cards_detail = serializers.SerializerMethodField()
+
     class Meta:
         model = Reading
-        fields = ('id', 'user', 'question', 'spread', 'cards_drawn', 'ai_response', 'created_at', 'is_favorite')
-        read_only_fields = ('id', 'user', 'cards_drawn', 'ai_response', 'created_at', 'is_favorite')
+        fields = (
+            'id', 'user', 'question', 'spread',
+            'cards_drawn', 'cards_detail',
+            'ai_response', 'created_at', 'is_favorite',
+        )
+        read_only_fields = (
+            'id', 'user', 'cards_drawn', 'cards_detail',
+            'ai_response', 'created_at', 'is_favorite',
+        )
 
     def validate_spread(self, value):
         if value not in SPREAD_CARD_COUNTS:
@@ -25,26 +38,25 @@ class ReadingSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         spread = attrs.get('spread')
-        required_cards = SPREAD_CARD_COUNTS.get(spread, 0)
-        available_cards = TarotCard.objects.count()
-        if available_cards < required_cards:
-            raise serializers.ValidationError({'spread': f'Not enough cards to create this spread. Required: {required_cards}.'})
+        required = SPREAD_CARD_COUNTS.get(spread, 0)
+        available = TarotCard.objects.count()
+        if available < required:
+            raise serializers.ValidationError(
+                {'spread': f'Not enough cards. Required: {required}, available: {available}.'}
+            )
         return attrs
 
-    def create(self, validated_data):
-        question = validated_data['question']
-        spread = validated_data['spread']
-        card_count = SPREAD_CARD_COUNTS[spread]
-        cards = sample(list(TarotCard.objects.all()), card_count)
-        cards_drawn = [
-            {'card_id': card.id, 'position': index + 1, 'reversed': choice((True, False))}
-            for index, card in enumerate(cards)
-        ]
-        ai_response = f'Lectura generada para: {question} [IA pendiente de integrar]'
-        return Reading.objects.create(
-            user=self.context['request'].user,
-            question=question,
-            spread=spread,
-            cards_drawn=cards_drawn,
-            ai_response=ai_response,
-        )
+    def get_cards_detail(self, obj):
+        card_ids = [item['card_id'] for item in obj.cards_drawn]
+        cards_map = {
+            c.id: c for c in TarotCard.objects.filter(id__in=card_ids)}
+        result = []
+        for item in obj.cards_drawn:
+            card = cards_map.get(item['card_id'])
+            if card:
+                result.append({
+                    'card': TarotCardSerializer(card, context=self.context).data,
+                    'position': item['position'],
+                    'reversed': item['reversed'],
+                })
+        return result
