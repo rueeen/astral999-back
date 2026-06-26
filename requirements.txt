@@ -1,0 +1,8 @@
+django>=5.0
+djangorestframework
+djangorestframework-simplejwt
+pillow
+python-decouple
+psycopg2-binary
+django-cors-headers
+anthropic

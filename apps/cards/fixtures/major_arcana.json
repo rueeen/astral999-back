@@ -1,0 +1,266 @@
+[
+  {
+    "name": "The Fool",
+    "slug": "the-fool",
+    "number": 0,
+    "meaning_up": "The Fool upright points to beginnings, innocence, spontaneity.",
+    "meaning_rev": "The Fool reversed invites reflection on blocked or imbalanced beginnings.",
+    "keywords": [
+      "beginnings",
+      "innocence",
+      "spontaneity"
+    ]
+  },
+  {
+    "name": "The Magician",
+    "slug": "the-magician",
+    "number": 1,
+    "meaning_up": "The Magician upright points to manifestation, willpower, skill.",
+    "meaning_rev": "The Magician reversed invites reflection on blocked or imbalanced manifestation.",
+    "keywords": [
+      "manifestation",
+      "willpower",
+      "skill"
+    ]
+  },
+  {
+    "name": "The High Priestess",
+    "slug": "the-high-priestess",
+    "number": 2,
+    "meaning_up": "The High Priestess upright points to intuition, mystery, inner wisdom.",
+    "meaning_rev": "The High Priestess reversed invites reflection on blocked or imbalanced intuition.",
+    "keywords": [
+      "intuition",
+      "mystery",
+      "inner wisdom"
+    ]
+  },
+  {
+    "name": "The Empress",
+    "slug": "the-empress",
+    "number": 3,
+    "meaning_up": "The Empress upright points to abundance, nurture, creativity.",
+    "meaning_rev": "The Empress reversed invites reflection on blocked or imbalanced abundance.",
+    "keywords": [
+      "abundance",
+      "nurture",
+      "creativity"
+    ]
+  },
+  {
+    "name": "The Emperor",
+    "slug": "the-emperor",
+    "number": 4,
+    "meaning_up": "The Emperor upright points to authority, structure, leadership.",
+    "meaning_rev": "The Emperor reversed invites reflection on blocked or imbalanced authority.",
+    "keywords": [
+      "authority",
+      "structure",
+      "leadership"
+    ]
+  },
+  {
+    "name": "The Hierophant",
+    "slug": "the-hierophant",
+    "number": 5,
+    "meaning_up": "The Hierophant upright points to tradition, teaching, belief.",
+    "meaning_rev": "The Hierophant reversed invites reflection on blocked or imbalanced tradition.",
+    "keywords": [
+      "tradition",
+      "teaching",
+      "belief"
+    ]
+  },
+  {
+    "name": "The Lovers",
+    "slug": "the-lovers",
+    "number": 6,
+    "meaning_up": "The Lovers upright points to love, choice, alignment.",
+    "meaning_rev": "The Lovers reversed invites reflection on blocked or imbalanced love.",
+    "keywords": [
+      "love",
+      "choice",
+      "alignment"
+    ]
+  },
+  {
+    "name": "The Chariot",
+    "slug": "the-chariot",
+    "number": 7,
+    "meaning_up": "The Chariot upright points to control, victory, determination.",
+    "meaning_rev": "The Chariot reversed invites reflection on blocked or imbalanced control.",
+    "keywords": [
+      "control",
+      "victory",
+      "determination"
+    ]
+  },
+  {
+    "name": "Strength",
+    "slug": "strength",
+    "number": 8,
+    "meaning_up": "Strength upright points to courage, compassion, inner strength.",
+    "meaning_rev": "Strength reversed invites reflection on blocked or imbalanced courage.",
+    "keywords": [
+      "courage",
+      "compassion",
+      "inner strength"
+    ]
+  },
+  {
+    "name": "The Hermit",
+    "slug": "the-hermit",
+    "number": 9,
+    "meaning_up": "The Hermit upright points to introspection, solitude, guidance.",
+    "meaning_rev": "The Hermit reversed invites reflection on blocked or imbalanced introspection.",
+    "keywords": [
+      "introspection",
+      "solitude",
+      "guidance"
+    ]
+  },
+  {
+    "name": "Wheel of Fortune",
+    "slug": "wheel-of-fortune",
+    "number": 10,
+    "meaning_up": "Wheel of Fortune upright points to cycles, change, destiny.",
+    "meaning_rev": "Wheel of Fortune reversed invites reflection on blocked or imbalanced cycles.",
+    "keywords": [
+      "cycles",
+      "change",
+      "destiny"
+    ]
+  },
+  {
+    "name": "Justice",
+    "slug": "justice",
+    "number": 11,
+    "meaning_up": "Justice upright points to fairness, truth, accountability.",
+    "meaning_rev": "Justice reversed invites reflection on blocked or imbalanced fairness.",
+    "keywords": [
+      "fairness",
+      "truth",
+      "accountability"
+    ]
+  },
+  {
+    "name": "The Hanged Man",
+    "slug": "the-hanged-man",
+    "number": 12,
+    "meaning_up": "The Hanged Man upright points to pause, surrender, new perspective.",
+    "meaning_rev": "The Hanged Man reversed invites reflection on blocked or imbalanced pause.",
+    "keywords": [
+      "pause",
+      "surrender",
+      "new perspective"
+    ]
+  },
+  {
+    "name": "Death",
+    "slug": "death",
+    "number": 13,
+    "meaning_up": "Death upright points to transformation, endings, renewal.",
+    "meaning_rev": "Death reversed invites reflection on blocked or imbalanced transformation.",
+    "keywords": [
+      "transformation",
+      "endings",
+      "renewal"
+    ]
+  },
+  {
+    "name": "Temperance",
+    "slug": "temperance",
+    "number": 14,
+    "meaning_up": "Temperance upright points to balance, patience, moderation.",
+    "meaning_rev": "Temperance reversed invites reflection on blocked or imbalanced balance.",
+    "keywords": [
+      "balance",
+      "patience",
+      "moderation"
+    ]
+  },
+  {
+    "name": "The Devil",
+    "slug": "the-devil",
+    "number": 15,
+    "meaning_up": "The Devil upright points to attachment, shadow, temptation.",
+    "meaning_rev": "The Devil reversed invites reflection on blocked or imbalanced attachment.",
+    "keywords": [
+      "attachment",
+      "shadow",
+      "temptation"
+    ]
+  },
+  {
+    "name": "The Tower",
+    "slug": "the-tower",
+    "number": 16,
+    "meaning_up": "The Tower upright points to upheaval, revelation, release.",
+    "meaning_rev": "The Tower reversed invites reflection on blocked or imbalanced upheaval.",
+    "keywords": [
+      "upheaval",
+      "revelation",
+      "release"
+    ]
+  },
+  {
+    "name": "The Star",
+    "slug": "the-star",
+    "number": 17,
+    "meaning_up": "The Star upright points to hope, healing, inspiration.",
+    "meaning_rev": "The Star reversed invites reflection on blocked or imbalanced hope.",
+    "keywords": [
+      "hope",
+      "healing",
+      "inspiration"
+    ]
+  },
+  {
+    "name": "The Moon",
+    "slug": "the-moon",
+    "number": 18,
+    "meaning_up": "The Moon upright points to illusion, dreams, uncertainty.",
+    "meaning_rev": "The Moon reversed invites reflection on blocked or imbalanced illusion.",
+    "keywords": [
+      "illusion",
+      "dreams",
+      "uncertainty"
+    ]
+  },
+  {
+    "name": "The Sun",
+    "slug": "the-sun",
+    "number": 19,
+    "meaning_up": "The Sun upright points to joy, success, vitality.",
+    "meaning_rev": "The Sun reversed invites reflection on blocked or imbalanced joy.",
+    "keywords": [
+      "joy",
+      "success",
+      "vitality"
+    ]
+  },
+  {
+    "name": "Judgement",
+    "slug": "judgement",
+    "number": 20,
+    "meaning_up": "Judgement upright points to awakening, reflection, calling.",
+    "meaning_rev": "Judgement reversed invites reflection on blocked or imbalanced awakening.",
+    "keywords": [
+      "awakening",
+      "reflection",
+      "calling"
+    ]
+  },
+  {
+    "name": "The World",
+    "slug": "the-world",
+    "number": 21,
+    "meaning_up": "The World upright points to completion, integration, fulfillment.",
+    "meaning_rev": "The World reversed invites reflection on blocked or imbalanced completion.",
+    "keywords": [
+      "completion",
+      "integration",
+      "fulfillment"
+    ]
+  }
+]
