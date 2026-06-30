@@ -3,264 +3,176 @@
     "name": "The Fool",
     "slug": "the-fool",
     "number": 0,
-    "meaning_up": "The Fool upright points to beginnings, innocence, spontaneity.",
-    "meaning_rev": "The Fool reversed invites reflection on blocked or imbalanced beginnings.",
-    "keywords": [
-      "beginnings",
-      "innocence",
-      "spontaneity"
-    ]
+    "meaning_up": "A leap into the unknown driven by pure trust. The Fool marks the start of a journey where experience has not yet hardened into fear. There is innocence here, but also tremendous potential — the beginner's mind that sees all possibilities.",
+    "meaning_rev": "Recklessness without awareness. A warning to pause before jumping. Energy is present but direction is missing. The Fool reversed asks: are you acting from freedom, or from avoidance?",
+    "keywords": ["beginnings", "innocence", "spontaneity", "adventure", "leap of faith"]
   },
   {
     "name": "The Magician",
     "slug": "the-magician",
     "number": 1,
-    "meaning_up": "The Magician upright points to manifestation, willpower, skill.",
-    "meaning_rev": "The Magician reversed invites reflection on blocked or imbalanced manifestation.",
-    "keywords": [
-      "manifestation",
-      "willpower",
-      "skill"
-    ]
+    "meaning_up": "Focused will turning potential into form. The Magician shows that the tools are already on the table: skill, attention, language, timing, and desire. When intention is clear, scattered energy becomes creative power.",
+    "meaning_rev": "Power used without integrity, or talent left unfocused. The Magician reversed can point to manipulation, empty promises, or a failure to commit to the work. It asks whether your words, motives, and actions are truly aligned.",
+    "keywords": ["manifestation", "willpower", "skill", "resourcefulness", "intention"]
   },
   {
     "name": "The High Priestess",
     "slug": "the-high-priestess",
     "number": 2,
-    "meaning_up": "The High Priestess upright points to intuition, mystery, inner wisdom.",
-    "meaning_rev": "The High Priestess reversed invites reflection on blocked or imbalanced intuition.",
-    "keywords": [
-      "intuition",
-      "mystery",
-      "inner wisdom"
-    ]
+    "meaning_up": "Quiet knowledge that rises from beneath the surface. The High Priestess invites stillness, secrecy, and deep listening. Not everything is ready to be explained; some truths must be felt before they can be named.",
+    "meaning_rev": "A disconnection from inner knowing, or intuition clouded by fear and projection. The High Priestess reversed may reveal hidden information, spiritual bypassing, or silence that has become avoidance. Return to the body and test what you sense.",
+    "keywords": ["intuition", "mystery", "inner wisdom", "silence", "hidden knowledge"]
   },
   {
     "name": "The Empress",
     "slug": "the-empress",
     "number": 3,
-    "meaning_up": "The Empress upright points to abundance, nurture, creativity.",
-    "meaning_rev": "The Empress reversed invites reflection on blocked or imbalanced abundance.",
-    "keywords": [
-      "abundance",
-      "nurture",
-      "creativity"
-    ]
+    "meaning_up": "Life in its fertile, generous expression. The Empress speaks of creativity, sensuality, care, and the patient growth of what is loved. She reminds you that abundance is not only produced — it is cultivated, received, and shared.",
+    "meaning_rev": "Nurture that has become depletion, control, or neglect. The Empress reversed can signal creative blocks, scarcity thinking, or giving so much that your own roots dry out. Restore softness without abandoning your needs.",
+    "keywords": ["abundance", "nurture", "creativity", "fertility", "sensuality"]
   },
   {
     "name": "The Emperor",
     "slug": "the-emperor",
     "number": 4,
-    "meaning_up": "The Emperor upright points to authority, structure, leadership.",
-    "meaning_rev": "The Emperor reversed invites reflection on blocked or imbalanced authority.",
-    "keywords": [
-      "authority",
-      "structure",
-      "leadership"
-    ]
+    "meaning_up": "Stable authority built through discipline, boundaries, and responsibility. The Emperor brings order to raw potential and protects what matters through structure. He asks for mature leadership: clear decisions, reliable action, and a strong foundation.",
+    "meaning_rev": "Control without wisdom, or structure that has become rigid and fearful. The Emperor reversed may show domination, avoidance of responsibility, or rebellion against any limit. Rebuild authority from steadiness rather than force.",
+    "keywords": ["authority", "structure", "leadership", "discipline", "protection"]
   },
   {
     "name": "The Hierophant",
     "slug": "the-hierophant",
     "number": 5,
-    "meaning_up": "The Hierophant upright points to tradition, teaching, belief.",
-    "meaning_rev": "The Hierophant reversed invites reflection on blocked or imbalanced tradition.",
-    "keywords": [
-      "tradition",
-      "teaching",
-      "belief"
-    ]
+    "meaning_up": "Wisdom carried through tradition, teaching, ritual, and shared belief. The Hierophant points to mentors, institutions, and practices that connect personal experience to a larger lineage. It favors learning the rules before deciding which ones to transform.",
+    "meaning_rev": "A need to question inherited beliefs or step outside a system that no longer serves truth. The Hierophant reversed can expose dogma, conformity, or spiritual authority used to limit growth. Seek the living meaning beneath the rule.",
+    "keywords": ["tradition", "teaching", "belief", "ritual", "mentorship"]
   },
   {
     "name": "The Lovers",
     "slug": "the-lovers",
     "number": 6,
-    "meaning_up": "The Lovers upright points to love, choice, alignment.",
-    "meaning_rev": "The Lovers reversed invites reflection on blocked or imbalanced love.",
-    "keywords": [
-      "love",
-      "choice",
-      "alignment"
-    ]
+    "meaning_up": "A choice made from the deepest truth of the heart. The Lovers speaks of union, attraction, vulnerability, and values brought into alignment. Love here is not only romance; it is the courage to choose what reflects the self honestly.",
+    "meaning_rev": "Misalignment between desire, values, and action. The Lovers reversed may point to disharmony, avoidance of choice, divided loyalty, or a bond maintained at the cost of integrity. Clarify what you are truly saying yes to.",
+    "keywords": ["love", "choice", "alignment", "partnership", "values"]
   },
   {
     "name": "The Chariot",
     "slug": "the-chariot",
     "number": 7,
-    "meaning_up": "The Chariot upright points to control, victory, determination.",
-    "meaning_rev": "The Chariot reversed invites reflection on blocked or imbalanced control.",
-    "keywords": [
-      "control",
-      "victory",
-      "determination"
-    ]
+    "meaning_up": "Victory through direction, discipline, and emotional command. The Chariot does not remove opposing forces; it harnesses them toward a chosen destination. Progress comes when desire, will, and self-control move as one.",
+    "meaning_rev": "Momentum without mastery, or ambition pulled apart by competing impulses. The Chariot reversed can show forcefulness, loss of direction, frustration, or giving up the reins. Pause, choose the road, and regain command from within.",
+    "keywords": ["control", "victory", "determination", "direction", "self-discipline"]
   },
   {
     "name": "Strength",
     "slug": "strength",
     "number": 8,
-    "meaning_up": "Strength upright points to courage, compassion, inner strength.",
-    "meaning_rev": "Strength reversed invites reflection on blocked or imbalanced courage.",
-    "keywords": [
-      "courage",
-      "compassion",
-      "inner strength"
-    ]
+    "meaning_up": "Gentle courage that works with instinct rather than against it. Strength is patience, compassion, and inner steadiness in the presence of fear or desire. True power appears as calm confidence, not domination.",
+    "meaning_rev": "Self-doubt, suppressed anger, or force used where tenderness is needed. Strength reversed asks you to notice where fear is driving the response. Healing comes through befriending the wild part, not shaming it into silence.",
+    "keywords": ["courage", "compassion", "inner strength", "patience", "confidence"]
   },
   {
     "name": "The Hermit",
     "slug": "the-hermit",
     "number": 9,
-    "meaning_up": "The Hermit upright points to introspection, solitude, guidance.",
-    "meaning_rev": "The Hermit reversed invites reflection on blocked or imbalanced introspection.",
-    "keywords": [
-      "introspection",
-      "solitude",
-      "guidance"
-    ]
+    "meaning_up": "A deliberate withdrawal in search of truth. The Hermit carries a lantern of earned wisdom, illuminating only the next honest step. Solitude becomes sacred when it strips away noise and returns you to your own guidance.",
+    "meaning_rev": "Isolation that no longer nourishes, or a refusal to listen to inner guidance. The Hermit reversed may suggest loneliness, avoidance, or seeking answers everywhere except within. Reconnect carefully, without abandoning the wisdom of the quiet.",
+    "keywords": ["introspection", "solitude", "guidance", "wisdom", "soul-searching"]
   },
   {
     "name": "Wheel of Fortune",
     "slug": "wheel-of-fortune",
     "number": 10,
-    "meaning_up": "Wheel of Fortune upright points to cycles, change, destiny.",
-    "meaning_rev": "Wheel of Fortune reversed invites reflection on blocked or imbalanced cycles.",
-    "keywords": [
-      "cycles",
-      "change",
-      "destiny"
-    ]
+    "meaning_up": "The turning of cycles and the arrival of a meaningful shift. Wheel of Fortune reminds you that life moves through seasons of rise, fall, chance, and consequence. When the wheel turns, meet change with awareness and adapt quickly.",
+    "meaning_rev": "Resistance to change, a difficult cycle, or the feeling of being caught in repeating patterns. Wheel of Fortune reversed asks what part of the pattern is yours to interrupt. Luck changes, but consciousness changes the way you ride it.",
+    "keywords": ["cycles", "change", "destiny", "turning point", "fortune"]
   },
   {
     "name": "Justice",
     "slug": "justice",
     "number": 11,
-    "meaning_up": "Justice upright points to fairness, truth, accountability.",
-    "meaning_rev": "Justice reversed invites reflection on blocked or imbalanced fairness.",
-    "keywords": [
-      "fairness",
-      "truth",
-      "accountability"
-    ]
+    "meaning_up": "Truth weighed with clarity and consequence. Justice calls for honesty, accountability, fair judgment, and decisions based on what is real rather than what is convenient. Every action has a ripple; choose with integrity.",
+    "meaning_rev": "Avoided accountability, bias, dishonesty, or an imbalance that must be corrected. Justice reversed warns against distorted judgment and convenient half-truths. Look directly at the facts, especially the ones that challenge your position.",
+    "keywords": ["fairness", "truth", "accountability", "karma", "decision"]
   },
   {
     "name": "The Hanged Man",
     "slug": "the-hanged-man",
     "number": 12,
-    "meaning_up": "The Hanged Man upright points to pause, surrender, new perspective.",
-    "meaning_rev": "The Hanged Man reversed invites reflection on blocked or imbalanced pause.",
-    "keywords": [
-      "pause",
-      "surrender",
-      "new perspective"
-    ]
+    "meaning_up": "A sacred pause that changes the meaning of everything. The Hanged Man invites surrender, suspension, and the willingness to see from an unfamiliar angle. What looks like delay may be the space where wisdom rearranges perception.",
+    "meaning_rev": "Stagnation, needless sacrifice, or resistance to the lesson of waiting. The Hanged Man reversed can show martyrdom, impatience, or clinging to an old viewpoint. Release the pose if it no longer brings insight.",
+    "keywords": ["pause", "surrender", "new perspective", "sacrifice", "release"]
   },
   {
     "name": "Death",
     "slug": "death",
     "number": 13,
-    "meaning_up": "Death upright points to transformation, endings, renewal.",
-    "meaning_rev": "Death reversed invites reflection on blocked or imbalanced transformation.",
-    "keywords": [
-      "transformation",
-      "endings",
-      "renewal"
-    ]
+    "meaning_up": "A profound ending that clears the ground for renewal. Death is transformation through release: the old form cannot continue, but its ending feeds the next life. Grieve what passes, and do not confuse closure with failure.",
+    "meaning_rev": "Fear of endings, delayed transformation, or clinging to what has already completed itself. Death reversed asks where resistance is prolonging pain. Let the old identity, attachment, or story finish so new life can move.",
+    "keywords": ["transformation", "endings", "renewal", "release", "transition"]
   },
   {
     "name": "Temperance",
     "slug": "temperance",
     "number": 14,
-    "meaning_up": "Temperance upright points to balance, patience, moderation.",
-    "meaning_rev": "Temperance reversed invites reflection on blocked or imbalanced balance.",
-    "keywords": [
-      "balance",
-      "patience",
-      "moderation"
-    ]
+    "meaning_up": "Harmony created through patience, moderation, and skillful blending. Temperance heals extremes by finding the right proportion between opposites. It favors integration, steady practice, and the quiet alchemy of balance over time.",
+    "meaning_rev": "Imbalance, excess, impatience, or a mixture that has lost its proportion. Temperance reversed asks where life has become too rushed, too divided, or too extreme. Healing begins by returning to rhythm and measured adjustment.",
+    "keywords": ["balance", "patience", "moderation", "harmony", "integration"]
   },
   {
     "name": "The Devil",
     "slug": "the-devil",
     "number": 15,
-    "meaning_up": "The Devil upright points to attachment, shadow, temptation.",
-    "meaning_rev": "The Devil reversed invites reflection on blocked or imbalanced attachment.",
-    "keywords": [
-      "attachment",
-      "shadow",
-      "temptation"
-    ]
+    "meaning_up": "The honest confrontation with attachment, desire, fear, and shadow. The Devil shows the chains that feel stronger than they are because habit, shame, or craving keeps feeding them. Freedom begins by naming what has power over you.",
+    "meaning_rev": "A loosening of bondage, or the uncomfortable work of breaking a pattern. The Devil reversed can mean liberation, withdrawal from temptation, or denial of the shadow that still needs attention. Choose freedom repeatedly, not just once.",
+    "keywords": ["attachment", "shadow", "temptation", "bondage", "liberation"]
   },
   {
     "name": "The Tower",
     "slug": "the-tower",
     "number": 16,
-    "meaning_up": "The Tower upright points to upheaval, revelation, release.",
-    "meaning_rev": "The Tower reversed invites reflection on blocked or imbalanced upheaval.",
-    "keywords": [
-      "upheaval",
-      "revelation",
-      "release"
-    ]
+    "meaning_up": "Sudden truth breaking through a structure that could not hold. The Tower brings upheaval, revelation, and collapse, but only to what was unstable, false, or too narrow for life. After the shock, there is space to rebuild honestly.",
+    "meaning_rev": "Avoided collapse, delayed revelation, or fear of necessary disruption. The Tower reversed may show inner turmoil before outer change, or an attempt to preserve what is already cracking. Let truth move before pressure makes it explosive.",
+    "keywords": ["upheaval", "revelation", "release", "collapse", "awakening"]
   },
   {
     "name": "The Star",
     "slug": "the-star",
     "number": 17,
-    "meaning_up": "The Star upright points to hope, healing, inspiration.",
-    "meaning_rev": "The Star reversed invites reflection on blocked or imbalanced hope.",
-    "keywords": [
-      "hope",
-      "healing",
-      "inspiration"
-    ]
+    "meaning_up": "Hope returning after difficulty, gentle and unmistakable. The Star offers healing, inspiration, spiritual renewal, and trust in a future that is not yet fully visible. It is the breath after crisis, reminding you that grace still flows.",
+    "meaning_rev": "Discouragement, loss of faith, or healing that feels distant. The Star reversed does not remove hope; it asks you to protect the small light while it is fragile. Reconnect with what restores your spirit rather than what drains it.",
+    "keywords": ["hope", "healing", "inspiration", "renewal", "faith"]
   },
   {
     "name": "The Moon",
     "slug": "the-moon",
     "number": 18,
-    "meaning_up": "The Moon upright points to illusion, dreams, uncertainty.",
-    "meaning_rev": "The Moon reversed invites reflection on blocked or imbalanced illusion.",
-    "keywords": [
-      "illusion",
-      "dreams",
-      "uncertainty"
-    ]
+    "meaning_up": "A passage through uncertainty, dreams, symbols, and shifting perception. The Moon reveals what logic cannot fully map: fear, intuition, illusion, memory, and the unconscious. Move slowly; not every shape in the dark is what it seems.",
+    "meaning_rev": "Confusion beginning to clear, or anxiety that has become difficult to separate from intuition. The Moon reversed may expose deception, self-deception, or hidden fears rising into awareness. Seek grounding before making final conclusions.",
+    "keywords": ["illusion", "dreams", "uncertainty", "intuition", "subconscious"]
   },
   {
     "name": "The Sun",
     "slug": "the-sun",
     "number": 19,
-    "meaning_up": "The Sun upright points to joy, success, vitality.",
-    "meaning_rev": "The Sun reversed invites reflection on blocked or imbalanced joy.",
-    "keywords": [
-      "joy",
-      "success",
-      "vitality"
-    ]
+    "meaning_up": "Clarity, vitality, and joy shining without apology. The Sun brings success, openness, confidence, and the simple power of being fully alive. What was hidden becomes visible, and life feels warmer because truth is easier to inhabit.",
+    "meaning_rev": "Dimmed joy, delayed success, or difficulty receiving what is good. The Sun reversed can show pessimism, burnout, or a need to reconnect with play and gratitude. The light is present, but something is blocking your willingness to feel it.",
+    "keywords": ["joy", "success", "vitality", "clarity", "optimism"]
   },
   {
     "name": "Judgement",
     "slug": "judgement",
     "number": 20,
-    "meaning_up": "Judgement upright points to awakening, reflection, calling.",
-    "meaning_rev": "Judgement reversed invites reflection on blocked or imbalanced awakening.",
-    "keywords": [
-      "awakening",
-      "reflection",
-      "calling"
-    ]
+    "meaning_up": "A call to awaken, review, and rise into a more honest life. Judgement brings reckoning without cruelty: the past is seen clearly so the soul can answer its next calling. Forgiveness and responsibility become part of the same liberation.",
+    "meaning_rev": "Avoiding the call, harsh self-judgment, or refusal to learn from the past. Judgement reversed asks whether shame is being mistaken for accountability. Listen for the deeper invitation beneath fear, and respond with courage.",
+    "keywords": ["awakening", "reflection", "calling", "reckoning", "forgiveness"]
   },
   {
     "name": "The World",
     "slug": "the-world",
     "number": 21,
-    "meaning_up": "The World upright points to completion, integration, fulfillment.",
-    "meaning_rev": "The World reversed invites reflection on blocked or imbalanced completion.",
-    "keywords": [
-      "completion",
-      "integration",
-      "fulfillment"
-    ]
+    "meaning_up": "Completion, integration, and the wholeness that comes after a full cycle. The World celebrates fulfillment, mastery, belonging, and the moment when many lessons become one lived wisdom. An ending arrives as a doorway to a larger horizon.",
+    "meaning_rev": "An unfinished cycle, lack of closure, or success that has not yet been fully integrated. The World reversed asks what final lesson, action, or acknowledgment is needed. Do not rush the ending; complete it consciously.",
+    "keywords": ["completion", "integration", "fulfillment", "wholeness", "achievement"]
   }
 ]
