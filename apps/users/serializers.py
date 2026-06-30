@@ -9,7 +9,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'first_name', 'last_name', 'bio', 'avatar')
+        fields = (
+            'id', 'username', 'email', 'password',
+            'first_name', 'last_name', 'bio', 'avatar',
+            'birth_date', 'birth_time', 'birth_place',
+        )
         read_only_fields = ('id',)
 
     def create(self, validated_data):
@@ -21,7 +25,17 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    zodiac_sign = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'bio', 'avatar')
-        read_only_fields = ('id', 'username')
+        fields = (
+            'id', 'username', 'email',
+            'first_name', 'last_name', 'bio', 'avatar',
+            'birth_date', 'birth_time', 'birth_place',
+            'zodiac_sign',
+        )
+        read_only_fields = ('id', 'username', 'zodiac_sign')
+
+    def get_zodiac_sign(self, obj):
+        return obj.get_zodiac_sign()
