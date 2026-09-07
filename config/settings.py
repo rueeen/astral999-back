@@ -1,11 +1,17 @@
 from pathlib import Path
 from decouple import Csv, config
+from django.core.exceptions import ImproperlyConfigured
+from datetime import timedelta
 from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key')
 DEBUG = config('DEBUG', default=True, cast=bool)
+SECRET_KEY = config('SECRET_KEY', default='')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured('SECRET_KEY es obligatoria cuando DEBUG=False.')
+    SECRET_KEY = 'django-insecure-solo-desarrollo'
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
@@ -17,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'apps.users',
     'apps.cards',
@@ -101,7 +108,40 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+    'DEFAULT_THROTTLE_RATES': {
+        'reading_create': '10/hour',
+    },
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='', cast=Csv())
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
+ANTHROPIC_MODEL = config('ANTHROPIC_MODEL', default='')
+ANTHROPIC_TIMEOUT = config('ANTHROPIC_TIMEOUT', default=30, cast=float)
+
+READING_PLAN_LIMITS = {
+    'free': {
+        'monthly_limit': 3,
+        'spreads': ('one_card', 'three_cards'),
+    },
+    'premium': {
+        'monthly_limit': None,
+        'spreads': ('one_card', 'three_cards', 'celtic_cross'),
+    },
+}
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

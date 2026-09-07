@@ -6,9 +6,16 @@ class TarotCard(models.Model):
         MAJOR = 'MAJOR', 'Major'
         MINOR = 'MINOR', 'Minor'
 
+    class Suit(models.TextChoices):
+        WANDS = 'wands', 'Bastos'
+        CUPS = 'cups', 'Copas'
+        SWORDS = 'swords', 'Espadas'
+        PENTACLES = 'pentacles', 'Oros'
+
     name = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)
     arcana = models.CharField(max_length=5, choices=Arcana.choices)
+    suit = models.CharField(max_length=10, choices=Suit.choices, blank=True, null=True)
     number = models.IntegerField()
     meaning_up = models.TextField()
     meaning_rev = models.TextField()

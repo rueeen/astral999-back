@@ -10,12 +10,6 @@ SPREAD_CARD_COUNTS = {
 }
 
 
-class DrawnCardSerializer(serializers.Serializer):
-    card = TarotCardSerializer()
-    position = serializers.IntegerField()
-    reversed = serializers.BooleanField()
-
-
 class ReadingSerializer(serializers.ModelSerializer):
     cards_detail = serializers.SerializerMethodField()
 
@@ -24,16 +18,18 @@ class ReadingSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'user', 'question', 'spread',
             'cards_drawn', 'cards_detail',
-            'ai_response', 'created_at', 'is_favorite',
+            'ai_response', 'mode', 'status', 'model_used', 'tokens_used',
+            'share_token', 'created_at', 'is_favorite',
         )
         read_only_fields = (
             'id', 'user', 'cards_drawn', 'cards_detail',
-            'ai_response', 'created_at', 'is_favorite',
+            'ai_response', 'status', 'model_used', 'tokens_used',
+            'share_token', 'created_at', 'is_favorite',
         )
 
     def validate_spread(self, value):
         if value not in SPREAD_CARD_COUNTS:
-            raise serializers.ValidationError('Invalid spread.')
+            raise serializers.ValidationError('La tirada seleccionada no es válida.')
         return value
 
     def validate(self, attrs):
@@ -42,14 +38,15 @@ class ReadingSerializer(serializers.ModelSerializer):
         available = TarotCard.objects.count()
         if available < required:
             raise serializers.ValidationError(
-                {'spread': f'Not enough cards. Required: {required}, available: {available}.'}
+                {'spread': f'No hay suficientes cartas. Se requieren {required} y hay {available}.'}
             )
         return attrs
 
     def get_cards_detail(self, obj):
         card_ids = [item['card_id'] for item in obj.cards_drawn]
-        cards_map = {
-            c.id: c for c in TarotCard.objects.filter(id__in=card_ids)}
+        cards_map = self.context.get('cards_map')
+        if cards_map is None:
+            cards_map = {c.id: c for c in TarotCard.objects.filter(id__in=card_ids)}
         result = []
         for item in obj.cards_drawn:
             card = cards_map.get(item['card_id'])
@@ -60,3 +57,13 @@ class ReadingSerializer(serializers.ModelSerializer):
                     'reversed': item['reversed'],
                 })
         return result
+
+
+class SharedReadingSerializer(ReadingSerializer):
+    class Meta:
+        model = Reading
+        fields = (
+            'question', 'spread', 'cards_drawn', 'cards_detail',
+            'ai_response', 'mode', 'created_at',
+        )
+        read_only_fields = fields
