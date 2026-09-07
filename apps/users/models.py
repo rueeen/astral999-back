@@ -1,8 +1,16 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 
 class User(AbstractUser):
+    class Plan(models.TextChoices):
+        FREE = 'free', 'Gratis'
+        PREMIUM = 'premium', 'Premium'
+
+    email = models.EmailField('email', unique=True)
+    plan = models.CharField(max_length=10, choices=Plan.choices, default=Plan.FREE)
+    plan_expires_at = models.DateTimeField(blank=True, null=True)
     bio = models.TextField(blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
@@ -10,6 +18,12 @@ class User(AbstractUser):
     birth_date = models.DateField(blank=True, null=True)
     birth_time = models.TimeField(blank=True, null=True)
     birth_place = models.CharField(max_length=120, blank=True)
+
+    @property
+    def is_premium(self):
+        return self.plan == self.Plan.PREMIUM and (
+            self.plan_expires_at is None or self.plan_expires_at > timezone.now()
+        )
 
     def get_zodiac_sign(self):
         """Retorna el signo solar basado en birth_date."""

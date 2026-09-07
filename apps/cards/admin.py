@@ -7,5 +7,5 @@ from .models import TarotCard
 class TarotCardAdmin(admin.ModelAdmin):
     list_display = ('name', 'arcana', 'number', 'created_at')
     list_filter = ('arcana',)
-    search_fields = ('name', 'slug', 'keywords')
+    search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}

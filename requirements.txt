@@ -1,8 +1,8 @@
-django>=5.0
-djangorestframework
-djangorestframework-simplejwt
-pillow
-python-decouple
-psycopg2-binary
-django-cors-headers
-anthropic
+django==6.1.1
+djangorestframework==3.18.1
+djangorestframework-simplejwt==5.5.1
+pillow==12.3.0
+python-decouple==3.8
+psycopg2-binary==2.9.12
+django-cors-headers==4.9.0
+anthropic==1.4.0

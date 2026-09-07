@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 
 User = get_user_model()
@@ -6,6 +8,11 @@ User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
+    email = serializers.EmailField(
+        required=True,
+        validators=[],
+        error_messages={'blank': 'El email es obligatorio.'},
+    )
 
     class Meta:
         model = User
@@ -22,6 +29,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+    def validate_email(self, value):
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError('Ya existe una cuenta con este email.')
+        return value.lower()
+
+    def validate(self, attrs):
+        try:
+            validate_password(attrs['password'], user=User(**attrs))
+        except DjangoValidationError as error:
+            raise serializers.ValidationError({'password': list(error.messages)}) from error
+        return attrs
 
 
 class UserSerializer(serializers.ModelSerializer):
