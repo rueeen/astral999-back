@@ -1,0 +1,1010 @@
+[
+  {
+    "name": "As de Bastos",
+    "slug": "ace-of-wands",
+    "number": 1,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "inicio",
+      "inspiración",
+      "potencial",
+      "creatividad"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Dos de Bastos",
+    "slug": "two-of-wands",
+    "number": 2,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "decisión",
+      "planificación",
+      "horizontes",
+      "progreso"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Tres de Bastos",
+    "slug": "three-of-wands",
+    "number": 3,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "expansión",
+      "previsión",
+      "oportunidades",
+      "avance"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cuatro de Bastos",
+    "slug": "four-of-wands",
+    "number": 4,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "celebración",
+      "hogar",
+      "comunidad",
+      "estabilidad"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 4,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cinco de Bastos",
+    "slug": "five-of-wands",
+    "number": 5,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "competencia",
+      "tensión",
+      "desafío",
+      "diversidad"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 5,
+    "yes_no": "no"
+  },
+  {
+    "name": "Seis de Bastos",
+    "slug": "six-of-wands",
+    "number": 6,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "victoria",
+      "reconocimiento",
+      "confianza",
+      "progreso"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 6,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Siete de Bastos",
+    "slug": "seven-of-wands",
+    "number": 7,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "defensa",
+      "convicción",
+      "perseverancia",
+      "límites"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 7,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Ocho de Bastos",
+    "slug": "eight-of-wands",
+    "number": 8,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "movimiento",
+      "rapidez",
+      "noticias",
+      "dirección"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 8,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Nueve de Bastos",
+    "slug": "nine-of-wands",
+    "number": 9,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "resiliencia",
+      "persistencia",
+      "cautela",
+      "fortaleza"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 9,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Diez de Bastos",
+    "slug": "ten-of-wands",
+    "number": 10,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "carga",
+      "responsabilidad",
+      "esfuerzo",
+      "agotamiento"
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 10,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Sota de Bastos",
+    "slug": "page-of-wands",
+    "number": 11,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "curiosidad",
+      "entusiasmo",
+      "descubrimiento",
+      "mensaje"
+    ],
+    "element": "fire",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Caballero de Bastos",
+    "slug": "knight-of-wands",
+    "number": 12,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "acción",
+      "aventura",
+      "impulso",
+      "pasión"
+    ],
+    "element": "fire",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Reina de Bastos",
+    "slug": "queen-of-wands",
+    "number": 13,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "confianza",
+      "calidez",
+      "determinación",
+      "independencia"
+    ],
+    "element": "fire",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Rey de Bastos",
+    "slug": "king-of-wands",
+    "number": 14,
+    "suit": "wands",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "liderazgo",
+      "visión",
+      "carisma",
+      "iniciativa"
+    ],
+    "element": "fire",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "As de Copas",
+    "slug": "ace-of-cups",
+    "number": 1,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "apertura emocional",
+      "amor",
+      "intuición",
+      "compasión"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Dos de Copas",
+    "slug": "two-of-cups",
+    "number": 2,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "unión",
+      "reciprocidad",
+      "acuerdo",
+      "vínculo"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Tres de Copas",
+    "slug": "three-of-cups",
+    "number": 3,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "amistad",
+      "celebración",
+      "comunidad",
+      "alegría"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cuatro de Copas",
+    "slug": "four-of-cups",
+    "number": 4,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "introspección",
+      "apatía",
+      "contemplación",
+      "reevaluación"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 4,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cinco de Copas",
+    "slug": "five-of-cups",
+    "number": 5,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "pérdida",
+      "duelo",
+      "decepción",
+      "aceptación"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 5,
+    "yes_no": "no"
+  },
+  {
+    "name": "Seis de Copas",
+    "slug": "six-of-cups",
+    "number": 6,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "nostalgia",
+      "inocencia",
+      "recuerdos",
+      "generosidad"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 6,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Siete de Copas",
+    "slug": "seven-of-cups",
+    "number": 7,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "opciones",
+      "fantasía",
+      "deseo",
+      "discernimiento"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 7,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Ocho de Copas",
+    "slug": "eight-of-cups",
+    "number": 8,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "partida",
+      "búsqueda",
+      "desapego",
+      "transición"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 8,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Nueve de Copas",
+    "slug": "nine-of-cups",
+    "number": 9,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "satisfacción",
+      "gratitud",
+      "placer",
+      "deseo cumplido"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 9,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Diez de Copas",
+    "slug": "ten-of-cups",
+    "number": 10,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "armonía",
+      "familia",
+      "plenitud",
+      "pertenencia"
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 10,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Sota de Copas",
+    "slug": "page-of-cups",
+    "number": 11,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "sensibilidad",
+      "intuición",
+      "mensaje afectivo",
+      "imaginación"
+    ],
+    "element": "water",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Caballero de Copas",
+    "slug": "knight-of-cups",
+    "number": 12,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "romance",
+      "encanto",
+      "invitación",
+      "idealismo"
+    ],
+    "element": "water",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Reina de Copas",
+    "slug": "queen-of-cups",
+    "number": 13,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "empatía",
+      "serenidad",
+      "intuición",
+      "cuidado"
+    ],
+    "element": "water",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Rey de Copas",
+    "slug": "king-of-cups",
+    "number": 14,
+    "suit": "cups",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "madurez emocional",
+      "diplomacia",
+      "compasión",
+      "equilibrio"
+    ],
+    "element": "water",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "As de Espadas",
+    "slug": "ace-of-swords",
+    "number": 1,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "claridad",
+      "verdad",
+      "idea",
+      "decisión"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Dos de Espadas",
+    "slug": "two-of-swords",
+    "number": 2,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "indecisión",
+      "equilibrio",
+      "pausa",
+      "protección"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Tres de Espadas",
+    "slug": "three-of-swords",
+    "number": 3,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "dolor",
+      "separación",
+      "verdad difícil",
+      "pena"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cuatro de Espadas",
+    "slug": "four-of-swords",
+    "number": 4,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "descanso",
+      "recuperación",
+      "silencio",
+      "reflexión"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 4,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cinco de Espadas",
+    "slug": "five-of-swords",
+    "number": 5,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "conflicto",
+      "tensión",
+      "victoria vacía",
+      "ego"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 5,
+    "yes_no": "no"
+  },
+  {
+    "name": "Seis de Espadas",
+    "slug": "six-of-swords",
+    "number": 6,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "transición",
+      "distancia",
+      "recuperación",
+      "viaje"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 6,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Siete de Espadas",
+    "slug": "seven-of-swords",
+    "number": 7,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "estrategia",
+      "discreción",
+      "evasión",
+      "astucia"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 7,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Ocho de Espadas",
+    "slug": "eight-of-swords",
+    "number": 8,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "restricción",
+      "miedo",
+      "impotencia",
+      "perspectiva"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 8,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Nueve de Espadas",
+    "slug": "nine-of-swords",
+    "number": 9,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "ansiedad",
+      "culpa",
+      "insomnio",
+      "preocupación"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 9,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Diez de Espadas",
+    "slug": "ten-of-swords",
+    "number": 10,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "final",
+      "colapso",
+      "agotamiento",
+      "aceptación"
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 10,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Sota de Espadas",
+    "slug": "page-of-swords",
+    "number": 11,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "curiosidad",
+      "vigilancia",
+      "ideas",
+      "comunicación"
+    ],
+    "element": "air",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Caballero de Espadas",
+    "slug": "knight-of-swords",
+    "number": 12,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "velocidad",
+      "ambición",
+      "franqueza",
+      "acción"
+    ],
+    "element": "air",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Reina de Espadas",
+    "slug": "queen-of-swords",
+    "number": 13,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "lucidez",
+      "independencia",
+      "límites",
+      "honestidad"
+    ],
+    "element": "air",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Rey de Espadas",
+    "slug": "king-of-swords",
+    "number": 14,
+    "suit": "swords",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "razón",
+      "autoridad",
+      "verdad",
+      "disciplina"
+    ],
+    "element": "air",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "As de Oros",
+    "slug": "ace-of-pentacles",
+    "number": 1,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "oportunidad",
+      "prosperidad",
+      "semilla",
+      "manifestación"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Dos de Oros",
+    "slug": "two-of-pentacles",
+    "number": 2,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "adaptación",
+      "equilibrio",
+      "prioridades",
+      "cambio"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Tres de Oros",
+    "slug": "three-of-pentacles",
+    "number": 3,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "colaboración",
+      "aprendizaje",
+      "oficio",
+      "calidad"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cuatro de Oros",
+    "slug": "four-of-pentacles",
+    "number": 4,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "seguridad",
+      "control",
+      "posesión",
+      "conservación"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 4,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Cinco de Oros",
+    "slug": "five-of-pentacles",
+    "number": 5,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "carencia",
+      "aislamiento",
+      "dificultad",
+      "apoyo"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 5,
+    "yes_no": "no"
+  },
+  {
+    "name": "Seis de Oros",
+    "slug": "six-of-pentacles",
+    "number": 6,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "generosidad",
+      "intercambio",
+      "recursos",
+      "reciprocidad"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 6,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Siete de Oros",
+    "slug": "seven-of-pentacles",
+    "number": 7,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "paciencia",
+      "evaluación",
+      "cultivo",
+      "recompensa"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 7,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Ocho de Oros",
+    "slug": "eight-of-pentacles",
+    "number": 8,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "práctica",
+      "dedicación",
+      "maestría",
+      "constancia"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 8,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Nueve de Oros",
+    "slug": "nine-of-pentacles",
+    "number": 9,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "autonomía",
+      "abundancia",
+      "disciplina",
+      "bienestar"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 9,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Diez de Oros",
+    "slug": "ten-of-pentacles",
+    "number": 10,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "legado",
+      "familia",
+      "estabilidad",
+      "patrimonio"
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 10,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Sota de Oros",
+    "slug": "page-of-pentacles",
+    "number": 11,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "estudio",
+      "oportunidad",
+      "constancia",
+      "mensaje práctico"
+    ],
+    "element": "earth",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "maybe"
+  },
+  {
+    "name": "Caballero de Oros",
+    "slug": "knight-of-pentacles",
+    "number": 12,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "trabajo",
+      "rutina",
+      "responsabilidad",
+      "perseverancia"
+    ],
+    "element": "earth",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Reina de Oros",
+    "slug": "queen-of-pentacles",
+    "number": 13,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "cuidado",
+      "practicidad",
+      "abundancia",
+      "arraigo"
+    ],
+    "element": "earth",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  },
+  {
+    "name": "Rey de Oros",
+    "slug": "king-of-pentacles",
+    "number": 14,
+    "suit": "pentacles",
+    "meaning_up": "",
+    "meaning_rev": "",
+    "keywords": [
+      "solidez",
+      "prosperidad",
+      "administración",
+      "seguridad"
+    ],
+    "element": "earth",
+    "is_court": true,
+    "numerology": null,
+    "yes_no": "yes"
+  }
+]
