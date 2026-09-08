@@ -45,6 +45,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     zodiac_sign = serializers.SerializerMethodField()
+    email = serializers.EmailField(required=True, validators=[])
 
     class Meta:
         model = User
@@ -58,3 +59,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_zodiac_sign(self, obj):
         return obj.get_zodiac_sign()
+
+    def validate_email(self, value):
+        users_with_email = User.objects.filter(email__iexact=value)
+        if self.instance is not None:
+            users_with_email = users_with_email.exclude(pk=self.instance.pk)
+        if users_with_email.exists():
+            raise serializers.ValidationError('Ya existe una cuenta con este email.')
+        return value.lower()

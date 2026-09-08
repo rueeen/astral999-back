@@ -1,13 +1,20 @@
+from datetime import UTC, datetime
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
+from django.core.exceptions import ImproperlyConfigured
+from django.test import override_settings
 from django.test import TestCase
+from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.cards.models import TarotCard
 from .models import Reading
+from .quotas import _period
 from .services.ai import AIResult
+from .services.ai import generate_reading
 
 
 def make_reading(user, **overrides):
@@ -81,15 +88,29 @@ class ReadingAPITests(TestCase):
 
     @patch('apps.readings.views.generate_reading', side_effect=RuntimeError('API caída'))
     def test_ai_failure_marks_reading_failed_without_consuming_quota(self, generate):
-        response = self.client.post('/api/readings/', {
-            'question': '¿Qué viene?', 'spread': 'one_card', 'mode': 'classic',
-        })
+        with self.assertLogs('apps.readings.views', level='ERROR') as logs:
+            response = self.client.post('/api/readings/', {
+                'question': '¿Qué viene?', 'spread': 'one_card', 'mode': 'classic',
+            })
 
         self.assertEqual(response.status_code, 503)
+        self.assertIn('API caída', logs.output[0])
         reading = Reading.objects.get(user=self.user)
         self.assertEqual(reading.status, Reading.Status.FAILED)
         quota = self.client.get('/api/users/me/quota/')
         self.assertEqual(quota.data['used'], 0)
+
+    @patch(
+        'apps.readings.views.generate_reading',
+        side_effect=ImproperlyConfigured('Falta configuración'),
+    )
+    def test_ai_configuration_error_is_not_converted_to_503(self, generate):
+        with self.assertRaisesMessage(ImproperlyConfigured, 'Falta configuración'):
+            self.client.post('/api/readings/', {
+                'question': '¿Qué viene?', 'spread': 'one_card', 'mode': 'classic',
+            })
+
+        self.assertEqual(Reading.objects.get(user=self.user).status, Reading.Status.FAILED)
 
     def test_user_cannot_retrieve_another_users_reading(self):
         reading = make_reading(self.other_user)
@@ -119,3 +140,93 @@ class ReadingAPITests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['results']), 5)
+
+    def test_failed_readings_are_hidden_from_list_unless_requested(self):
+        ready = make_reading(self.user)
+        failed = make_reading(
+            self.user, status=Reading.Status.FAILED, ai_response='',
+        )
+
+        response = self.client.get('/api/readings/')
+        self.assertEqual([item['id'] for item in response.data['results']], [ready.id])
+
+        response = self.client.get('/api/readings/?include_failed=true')
+        self.assertCountEqual(
+            [item['id'] for item in response.data['results']], [ready.id, failed.id],
+        )
+
+        response = self.client.get(f'/api/readings/{failed.id}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['status'], Reading.Status.FAILED)
+
+
+class QuotaPeriodTests(TestCase):
+    @override_settings(TIME_ZONE='America/Santiago')
+    def test_period_uses_local_month_near_utc_month_change(self):
+        with timezone.override('America/Santiago'):
+            start, end = _period(datetime(2026, 4, 1, 0, 30, tzinfo=UTC))
+
+        self.assertEqual(start, datetime(2026, 3, 1, 3, 0, tzinfo=UTC))
+        self.assertEqual(end, datetime(2026, 4, 1, 3, 0, tzinfo=UTC))
+
+
+@override_settings(
+    ANTHROPIC_API_KEY='clave-test',
+    ANTHROPIC_MODEL='modelo-test',
+    ANTHROPIC_TIMEOUT=30,
+)
+class AIServiceTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username='ia')
+        self.card = TarotCard.objects.create(
+            name='Carta', slug='carta-ia', arcana=TarotCard.Arcana.MAJOR,
+            number=0, meaning_up='Luz', meaning_rev='Sombra', keywords=[],
+        )
+
+    def call_service(self):
+        return generate_reading(
+            question='¿Qué necesito saber?', spread='one_card',
+            cards=[{'card': self.card, 'position': 1, 'reversed': False}],
+            mode='classic', user=self.user,
+        )
+
+    @patch('apps.readings.services.ai.Anthropic')
+    @override_settings(ANTHROPIC_TEMPERATURE=None)
+    def test_uses_larger_token_budget_without_default_temperature(self, anthropic):
+        anthropic.return_value.messages.create.return_value = SimpleNamespace(
+            content=[SimpleNamespace(type='text', text='Lectura completa.')],
+            usage=SimpleNamespace(input_tokens=10, output_tokens=20),
+            model='modelo-respuesta', stop_reason='end_turn',
+        )
+
+        result = self.call_service()
+
+        self.assertEqual(result.tokens, 30)
+        kwargs = anthropic.return_value.messages.create.call_args.kwargs
+        self.assertEqual(kwargs['max_tokens'], 1200)
+        self.assertNotIn('temperature', kwargs)
+
+    @patch('apps.readings.services.ai.Anthropic')
+    @override_settings(ANTHROPIC_TEMPERATURE=0.7)
+    def test_sends_explicit_temperature(self, anthropic):
+        anthropic.return_value.messages.create.return_value = SimpleNamespace(
+            content=[SimpleNamespace(type='text', text='Lectura completa.')],
+            usage=SimpleNamespace(input_tokens=10, output_tokens=20),
+            model='modelo-respuesta', stop_reason='end_turn',
+        )
+
+        self.call_service()
+
+        kwargs = anthropic.return_value.messages.create.call_args.kwargs
+        self.assertEqual(kwargs['temperature'], 0.7)
+
+    @patch('apps.readings.services.ai.Anthropic')
+    def test_rejects_truncated_response(self, anthropic):
+        anthropic.return_value.messages.create.return_value = SimpleNamespace(
+            content=[SimpleNamespace(type='text', text='Lectura incompleta')],
+            usage=SimpleNamespace(input_tokens=10, output_tokens=1200),
+            model='modelo-respuesta', stop_reason='max_tokens',
+        )
+
+        with self.assertRaisesRegex(RuntimeError, 'truncó'):
+            self.call_service()

@@ -127,6 +127,10 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
 ANTHROPIC_MODEL = config('ANTHROPIC_MODEL', default='')
 ANTHROPIC_TIMEOUT = config('ANTHROPIC_TIMEOUT', default=30, cast=float)
+_anthropic_temperature = config('ANTHROPIC_TEMPERATURE', default='')
+ANTHROPIC_TEMPERATURE = (
+    float(_anthropic_temperature) if _anthropic_temperature != '' else None
+)
 
 READING_PLAN_LIMITS = {
     'free': {

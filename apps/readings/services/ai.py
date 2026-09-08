@@ -42,12 +42,19 @@ def generate_reading(*, question, spread, cards, mode, user):
         timeout=settings.ANTHROPIC_TIMEOUT,
         max_retries=1,
     )
-    response = client.messages.create(
+    request_options = dict(
         model=settings.ANTHROPIC_MODEL,
-        max_tokens=700,
+        max_tokens=1200,
         system=SYSTEM_PROMPTS[mode],
         messages=[{'role': 'user', 'content': prompt}],
     )
+    # Los modelos Anthropic de generación 5 solo aceptan la temperatura predeterminada.
+    # Por eso no enviamos el parámetro salvo que el entorno lo configure explícitamente.
+    if settings.ANTHROPIC_TEMPERATURE is not None:
+        request_options['temperature'] = settings.ANTHROPIC_TEMPERATURE
+    response = client.messages.create(**request_options)
+    if response.stop_reason == 'max_tokens':
+        raise RuntimeError('Anthropic truncó la lectura al alcanzar el límite de tokens.')
     text = ''.join(block.text for block in response.content if block.type == 'text').strip()
     if not text:
         raise RuntimeError('Anthropic devolvió una lectura vacía.')
