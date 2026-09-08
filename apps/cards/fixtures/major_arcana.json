@@ -11,7 +11,11 @@
       "espontaneidad",
       "aventura",
       "salto de fe"
-    ]
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 0,
+    "yes_no": "yes"
   },
   {
     "name": "El Mago",
@@ -25,7 +29,11 @@
       "habilidad",
       "recursos",
       "intención"
-    ]
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
   },
   {
     "name": "La Sacerdotisa",
@@ -39,7 +47,11 @@
       "sabiduría interior",
       "silencio",
       "conocimiento oculto"
-    ]
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "maybe"
   },
   {
     "name": "La Emperatriz",
@@ -53,7 +65,11 @@
       "creatividad",
       "fertilidad",
       "sensualidad"
-    ]
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "yes"
   },
   {
     "name": "El Emperador",
@@ -67,7 +83,11 @@
       "liderazgo",
       "disciplina",
       "protección"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 4,
+    "yes_no": "yes"
   },
   {
     "name": "El Hierofante",
@@ -81,7 +101,11 @@
       "creencias",
       "ritual",
       "mentoría"
-    ]
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 5,
+    "yes_no": "maybe"
   },
   {
     "name": "Los Enamorados",
@@ -95,7 +119,11 @@
       "coherencia",
       "pareja",
       "valores"
-    ]
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 6,
+    "yes_no": "yes"
   },
   {
     "name": "El Carro",
@@ -109,7 +137,11 @@
       "determinación",
       "dirección",
       "autodisciplina"
-    ]
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 7,
+    "yes_no": "yes"
   },
   {
     "name": "La Fuerza",
@@ -123,7 +155,11 @@
       "fortaleza interior",
       "paciencia",
       "confianza"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 8,
+    "yes_no": "yes"
   },
   {
     "name": "El Ermitaño",
@@ -137,7 +173,11 @@
       "guía",
       "sabiduría",
       "búsqueda interior"
-    ]
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 9,
+    "yes_no": "maybe"
   },
   {
     "name": "La Rueda de la Fortuna",
@@ -151,7 +191,11 @@
       "destino",
       "punto de giro",
       "fortuna"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
   },
   {
     "name": "La Justicia",
@@ -165,7 +209,11 @@
       "responsabilidad",
       "karma",
       "decisión"
-    ]
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "maybe"
   },
   {
     "name": "El Colgado",
@@ -179,7 +227,11 @@
       "nueva perspectiva",
       "sacrificio",
       "liberación"
-    ]
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "maybe"
   },
   {
     "name": "La Muerte",
@@ -193,7 +245,11 @@
       "renovación",
       "liberación",
       "transición"
-    ]
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 4,
+    "yes_no": "no"
   },
   {
     "name": "La Templanza",
@@ -207,7 +263,11 @@
       "moderación",
       "armonía",
       "integración"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 5,
+    "yes_no": "yes"
   },
   {
     "name": "El Diablo",
@@ -221,7 +281,11 @@
       "tentación",
       "atadura",
       "liberación"
-    ]
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 6,
+    "yes_no": "no"
   },
   {
     "name": "La Torre",
@@ -235,7 +299,11 @@
       "liberación",
       "derrumbe",
       "despertar"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 7,
+    "yes_no": "no"
   },
   {
     "name": "La Estrella",
@@ -249,7 +317,11 @@
       "inspiración",
       "renovación",
       "fe"
-    ]
+    ],
+    "element": "air",
+    "is_court": false,
+    "numerology": 8,
+    "yes_no": "yes"
   },
   {
     "name": "La Luna",
@@ -263,7 +335,11 @@
       "incertidumbre",
       "intuición",
       "subconsciente"
-    ]
+    ],
+    "element": "water",
+    "is_court": false,
+    "numerology": 9,
+    "yes_no": "maybe"
   },
   {
     "name": "El Sol",
@@ -277,7 +353,11 @@
       "vitalidad",
       "claridad",
       "optimismo"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 1,
+    "yes_no": "yes"
   },
   {
     "name": "El Juicio",
@@ -291,7 +371,11 @@
       "llamado",
       "evaluación",
       "perdón"
-    ]
+    ],
+    "element": "fire",
+    "is_court": false,
+    "numerology": 2,
+    "yes_no": "yes"
   },
   {
     "name": "El Mundo",
@@ -305,6 +389,10 @@
       "realización",
       "plenitud",
       "logro"
-    ]
+    ],
+    "element": "earth",
+    "is_court": false,
+    "numerology": 3,
+    "yes_no": "yes"
   }
 ]

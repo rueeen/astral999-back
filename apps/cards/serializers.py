@@ -6,5 +6,9 @@ from .models import TarotCard
 class TarotCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = TarotCard
-        fields = ('id', 'name', 'slug', 'arcana', 'suit', 'number', 'meaning_up', 'meaning_rev', 'keywords', 'image', 'created_at')
+        fields = (
+            'id', 'name', 'slug', 'arcana', 'suit', 'number', 'meaning_up',
+            'meaning_rev', 'keywords', 'element', 'is_court', 'numerology',
+            'yes_no', 'image', 'created_at',
+        )
         read_only_fields = ('id', 'created_at')
