@@ -1,5 +1,7 @@
+import logging
 from random import choice, sample
 
+from django.core.exceptions import ImproperlyConfigured
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import APIException
 from rest_framework.throttling import ScopedRateThrottle
@@ -11,6 +13,8 @@ from .models import Reading
 from .serializers import ReadingSerializer, SharedReadingSerializer, SPREAD_CARD_COUNTS
 from .quotas import validate_quota
 from .services.ai import generate_reading
+
+logger = logging.getLogger(__name__)
 
 
 class ReadingServiceUnavailable(APIException):
@@ -30,7 +34,10 @@ class ReadingListCreateView(generics.ListCreateAPIView):
         return []
 
     def get_queryset(self):
-        return Reading.objects.filter(user=self.request.user)
+        queryset = Reading.objects.filter(user=self.request.user)
+        if self.request.method == 'GET' and self.request.query_params.get('include_failed') != 'true':
+            queryset = queryset.exclude(status=Reading.Status.FAILED)
+        return queryset
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -67,13 +74,15 @@ class ReadingListCreateView(generics.ListCreateAPIView):
                 mode=reading.mode,
                 user=self.request.user,
             )
-            if isinstance(result, str):
-                text, model, tokens = result, None, None
-            else:
-                text, model, tokens = result.text, result.model, result.tokens
+            text, model, tokens = result.text, result.model, result.tokens
             if not text.strip():
                 raise RuntimeError('Respuesta vacía')
+        except ImproperlyConfigured:
+            reading.status = Reading.Status.FAILED
+            reading.save(update_fields=('status',))
+            raise
         except Exception as error:
+            logger.exception('Falló la generación de la lectura %s.', reading.pk)
             reading.status = Reading.Status.FAILED
             reading.save(update_fields=('status',))
             raise ReadingServiceUnavailable() from error

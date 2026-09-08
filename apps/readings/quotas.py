@@ -1,5 +1,5 @@
 from calendar import monthrange
-from datetime import timedelta
+from datetime import UTC, timedelta
 
 from django.conf import settings
 from django.utils import timezone
@@ -17,10 +17,11 @@ class QuotaDenied(APIException):
 
 def _period(now=None):
     now = now or timezone.now()
-    start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    last_day = monthrange(now.year, now.month)[1]
-    end = start.replace(day=last_day) + timedelta(days=1)
-    return start, end
+    local_now = timezone.localtime(now)
+    local_start = local_now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    last_day = monthrange(local_now.year, local_now.month)[1]
+    local_end = local_start.replace(day=last_day) + timedelta(days=1)
+    return local_start.astimezone(UTC), local_end.astimezone(UTC)
 
 
 def get_quota(user):
