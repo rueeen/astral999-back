@@ -181,6 +181,13 @@ class ReadingAPITests(TestCase):
 
 
 class TreatmentPromptTests(TestCase):
+    def test_negative_prompt_preserves_safety_restrictions(self):
+        prompt = build_system_prompt('negative')
+        self.assertIn('Si la pregunta trae dolor genuino', prompt)
+        self.assertIn('abandona el registro por completo y responde con seriedad y cuidado', prompt)
+        self.assertIn('No menciones salud, enfermedad', prompt)
+        self.assertIn('autolesiones, ni siquiera de pasada', prompt)
+
     def test_masculine_instruction(self):
         prompt = build_system_prompt('classic', 'masculine')
         self.assertIn('concordar en masculino todos los adjetivos y participios', prompt)
