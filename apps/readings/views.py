@@ -4,6 +4,7 @@ from random import choice, sample
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models import Count, Q, Sum
 from django.http import FileResponse, Http404
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import APIException
@@ -12,8 +13,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.cards.models import TarotCard
-from .models import Reading
-from .serializers import ReadingSerializer, SharedReadingSerializer, SPREAD_CARD_COUNTS
+from .models import Reading, ReadingFeedback
+from .serializers import (
+    ReadingFeedbackSerializer, ReadingSerializer, SharedReadingSerializer, SPREAD_CARD_COUNTS,
+)
 from .quotas import current_month_cost, validate_quota
 from .services.ai import generate_reading
 from .services.share_image import get_or_render
@@ -180,3 +183,54 @@ class SharedReadingImageView(APIView):
         response = FileResponse(open(image_path, 'rb'), content_type='image/png')
         response['Cache-Control'] = 'public, max-age=31536000, immutable'
         return response
+
+
+class ReadingFeedbackView(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_reading(self, request, pk):
+        try:
+            return Reading.objects.get(pk=pk, user=request.user)
+        except (Reading.DoesNotExist, TypeError):
+            raise Http404
+
+    def post(self, request, pk):
+        reading = self.get_reading(request, pk)
+        serializer = ReadingFeedbackSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        generation_context = {
+            'question': reading.question,
+            'spread': reading.spread,
+            'cards_drawn': reading.cards_drawn,
+            'mode': reading.mode,
+            'address_as': reading.address_as,
+            'model_used': reading.model_used,
+        }
+        feedback, created = ReadingFeedback.objects.update_or_create(
+            reading=reading,
+            user=request.user,
+            defaults={**serializer.validated_data, 'generation_context': generation_context},
+        )
+        return Response(
+            ReadingFeedbackSerializer(feedback).data,
+            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+        )
+
+    put = post
+
+
+class ReadingFeedbackSummaryView(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, pk):
+        try:
+            reading = Reading.objects.get(pk=pk, user=request.user)
+        except (Reading.DoesNotExist, TypeError):
+            raise Http404
+        totals = reading.feedback.aggregate(
+            likes=Count('id', filter=Q(value=ReadingFeedback.Value.LIKE)),
+            dislikes=Count('id', filter=Q(value=ReadingFeedback.Value.DISLIKE)),
+            score=Sum('value'),
+        )
+        totals['score'] = totals['score'] or 0
+        return Response(totals)

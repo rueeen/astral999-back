@@ -42,6 +42,8 @@ python manage.py test
 | GET, POST | `/api/readings/` | Listar o crear lecturas | Autenticado |
 | GET | `/api/readings/<id>/` | Detalle propio | Autenticado |
 | PATCH | `/api/readings/<id>/favorite/` | Fijar estado favorito | Autenticado |
+| POST, PUT | `/api/readings/<id>/feedback/` | Crear o reemplazar el voto propio | Autenticado |
+| GET | `/api/readings/<id>/feedback/summary/` | Resumen agregado de feedback | Autenticado |
 | GET | `/api/readings/shared/<uuid>/` | Lectura compartida | Público |
 
 ## Variables de entorno
@@ -59,6 +61,7 @@ python manage.py test
 | `ANTHROPIC_TIMEOUT` | Timeout de la llamada a Anthropic en segundos. |
 | `ANTHROPIC_PROXY` | Proxy HTTPS opcional; en PythonAnywhere gratuito usa `http://proxy.server:3128`. |
 | `ANTHROPIC_TEMPERATURE` | Temperatura opcional. Si no se define, Anthropic usa su valor predeterminado `1.0`. Los modelos de generación 5 rechazan valores distintos del predeterminado, por lo que conviene omitirla al usarlos. |
+| `FEEDBACK_FEW_SHOT_EXAMPLES` | Referencias positivas inyectadas por generación (`0` desactiva; máximo efectivo `3`). |
 | `MONTHLY_BUDGET` | Presupuesto mensual de generación, en la moneda de los precios cargados. `0` lo desactiva. |
 | `TRIAL_MODE` | Activa (`True`) la concesión temporal del plan premium. Por defecto es `False`. |
 | `TRIAL_ENDS_AT` | Fecha/hora ISO de vencimiento obligatoria cuando `TRIAL_MODE=True`. |
@@ -218,3 +221,22 @@ al copiarlos a `MEDIA_ROOT`. En particular, las listas `light` y
 `shadow` describen facetas que pueden aparecer en cualquier orientación: la semilla las
 une en `meaning_up` y deja un marcador genérico inequívoco en `meaning_rev`; no interpreta
 «sombra» como «invertida».
+
+# Feedback de lecturas
+
+Un usuario autenticado crea o reemplaza su voto con `POST` o `PUT` a
+`/api/readings/<id>/feedback/` enviando `{"value": 1, "comment": "..."}` (o `-1`).
+El resumen está disponible en `GET /api/readings/<id>/feedback/summary/`.
+
+Las generaciones incluyen hasta tres lecturas positivas del mismo tipo como referencias de
+estilo. Se puede ajustar con `FEEDBACK_FEW_SHOT_EXAMPLES` (entre 0 y 3; `0` desactiva la
+inyección). Las respuestas negativas no se copian al prompt para no reforzar esos patrones.
+
+Para exportar ejemplos revisables en JSONL:
+
+```bash
+python manage.py export_feedback_dataset --min-score 1 --limit 100 --output feedback.jsonl
+```
+
+El archivo es una base para few-shot. Antes de un eventual fine-tuning con otro proveedor debe
+anonimizarse, revisarse y versionarse; no debe enviarse automáticamente a un modelo.

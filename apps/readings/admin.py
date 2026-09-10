@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AnthropicCostReconciliation, ApiTopUp, ModelPricing, Reading
+from .models import AnthropicCostReconciliation, ApiTopUp, ModelPricing, Reading, ReadingFeedback
 
 
 @admin.register(ModelPricing)
@@ -15,6 +15,14 @@ class ReadingAdmin(admin.ModelAdmin):
     list_display = ('user', 'spread', 'mode', 'status', 'cost', 'cost_currency', 'created_at')
     list_filter = ('spread', 'mode', 'status', 'is_favorite', 'created_at')
     search_fields = ('user__username', 'question', 'ai_response')
+
+
+@admin.register(ReadingFeedback)
+class ReadingFeedbackAdmin(admin.ModelAdmin):
+    list_display = ('reading', 'user', 'value', 'created_at')
+    list_filter = ('value', 'created_at')
+    search_fields = ('reading__question', 'user__username', 'comment')
+    readonly_fields = ('generation_context', 'created_at')
 
 
 @admin.register(ApiTopUp)

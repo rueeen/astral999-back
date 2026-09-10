@@ -133,3 +133,31 @@ class Reading(models.Model):
                 if update_fields is not None:
                     kwargs['update_fields'] = tuple(set(update_fields) | {'cost', 'cost_currency'})
         return super().save(*args, **kwargs)
+
+
+class ReadingFeedback(models.Model):
+    class Value(models.IntegerChoices):
+        LIKE = 1, 'Like'
+        DISLIKE = -1, 'Dislike'
+
+    reading = models.ForeignKey(Reading, on_delete=models.CASCADE, related_name='feedback')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        related_name='reading_feedback', blank=True, null=True,
+    )
+    value = models.SmallIntegerField(choices=Value.choices)
+    comment = models.TextField(blank=True, default='')
+    # Snapshot mínimo para auditar qué produjo la respuesta si los prompts cambian.
+    generation_context = models.JSONField(default=dict, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created_at',)
+        constraints = [
+            models.UniqueConstraint(
+                fields=('reading', 'user'), name='unique_reading_feedback_user',
+            ),
+        ]
+
+    def __str__(self):
+        return f'{self.reading_id}: {self.get_value_display()}'

@@ -140,6 +140,8 @@ _anthropic_temperature = config('ANTHROPIC_TEMPERATURE', default='')
 ANTHROPIC_TEMPERATURE = (
     float(_anthropic_temperature) if _anthropic_temperature != '' else None
 )
+# Cantidad de ejemplos positivos que se añaden como referencia de estilo (0-3).
+FEEDBACK_FEW_SHOT_EXAMPLES = config('FEEDBACK_FEW_SHOT_EXAMPLES', default=3, cast=int)
 
 READING_PLAN_LIMITS = {
     'free': {

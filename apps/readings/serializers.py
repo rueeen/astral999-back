@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from apps.cards.models import TarotCard
 from apps.cards.serializers import TarotCardSerializer
-from .models import Reading
+from .models import Reading, ReadingFeedback
 
 SPREAD_CARD_COUNTS = {
     'one_card': 1,
@@ -72,3 +72,10 @@ class SharedReadingSerializer(ReadingSerializer):
             'ai_response', 'mode', 'created_at',
         )
         read_only_fields = fields
+
+
+class ReadingFeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReadingFeedback
+        fields = ('id', 'reading', 'user', 'value', 'comment', 'generation_context', 'created_at')
+        read_only_fields = ('id', 'reading', 'user', 'generation_context', 'created_at')

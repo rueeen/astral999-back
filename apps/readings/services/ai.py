@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 from .prompts import SPREAD_POSITIONS, build_system_prompt
+from .feedback import build_few_shot_reference
 
 
 @dataclass(frozen=True)
@@ -57,12 +58,18 @@ def generate_reading(*, question, spread, cards, mode, user):
     if settings.ANTHROPIC_PROXY:
         client_options['http_client'] = DefaultHttpxClient(proxy=settings.ANTHROPIC_PROXY)
     client = Anthropic(**client_options)
+    system_prompt = build_system_prompt(mode, user.address_as)
+    references = build_few_shot_reference(
+        spread=spread, mode=mode, limit=settings.FEEDBACK_FEW_SHOT_EXAMPLES,
+    )
+    if references:
+        system_prompt = f'{system_prompt}\n\n{references}'
     request_options = dict(
         model=settings.ANTHROPIC_MODEL,
         max_tokens=1200,
         system=[{
             'type': 'text',
-            'text': build_system_prompt(mode, user.address_as),
+            'text': system_prompt,
             'cache_control': {'type': 'ephemeral'},
         }],
         messages=[{'role': 'user', 'content': prompt}],
