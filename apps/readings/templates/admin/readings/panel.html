@@ -1,0 +1,59 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  .summary-grid, .chart-grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin:20px 0; }
+  .metric, .chart-card, .notice { background:var(--body-bg); border:1px solid var(--hairline-color); border-radius:6px; padding:18px; }
+  .metric strong { display:block; font-size:1.7rem; margin-top:8px; }
+  .chart-card { min-height:300px; } .chart-card canvas { max-height:250px; }
+  .notice { border-left:5px solid #ba2121; margin:12px 0; }
+  .balance { border-left:5px solid var(--primary); }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a> &rsaquo; Panel</div>{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+{% if low_balance %}<div class="notice"><strong>Saldo estimado bajo.</strong> Está por debajo del umbral configurado.</div>{% endif %}
+{% if over_budget %}<div class="notice"><strong>Alerta de presupuesto.</strong> El gasto del mes alcanzó al menos el 80 % del presupuesto de USD {{ monthly_budget|floatformat:2 }}.</div>{% endif %}
+
+<div class="summary-grid">
+  <div class="metric"><span>Lecturas del mes</span><strong>{{ month_readings }}</strong></div>
+  <div class="metric"><span>Costo del mes</span><strong>USD {{ month_cost|floatformat:4 }}</strong></div>
+  <div class="metric"><span>Costo medio por lectura</span><strong>USD {{ average_cost|floatformat:4 }}</strong></div>
+  <div class="metric"><span>Usuarios activos este mes</span><strong>{{ month_users }}</strong></div>
+</div>
+<div class="metric balance">
+  <span>Saldo estimado (cálculo local, no es el saldo oficial de Anthropic)</span>
+  <strong>USD {{ estimated_balance|floatformat:4 }}</strong>
+  <small>Última recarga: {% if last_top_up %}{{ last_top_up|date:"d/m/Y H:i" }}{% else %}ninguna registrada{% endif %}</small>
+</div>
+
+<div class="chart-grid">
+  <div class="chart-card"><h2>Lecturas por día y modo</h2><canvas id="readings"></canvas></div>
+  <div class="chart-card"><h2>Costo por día (USD)</h2><canvas id="costs"></canvas></div>
+  <div class="chart-card"><h2>Tasa de fallo</h2><canvas id="failures"></canvas></div>
+  <div class="chart-card"><h2>Distribución por tirada</h2><canvas id="spreads"></canvas></div>
+  <div class="chart-card"><h2>Usuarios activos por día</h2><canvas id="users"></canvas></div>
+</div>
+
+{{ readings_by_day|json_script:"readings-data" }}
+{{ costs_by_day|json_script:"costs-data" }}
+{{ failures_by_day|json_script:"failures-data" }}
+{{ spreads|json_script:"spreads-data" }}
+{{ active_users|json_script:"users-data" }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+  const data = id => JSON.parse(document.getElementById(id).textContent);
+  const days = rows => [...new Set(rows.map(row => row.day))];
+  const line = (id, labels, datasets, options = {}) => new Chart(document.getElementById(id), {type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,...options}});
+  const readingRows=data('readings-data'), readingDays=days(readingRows);
+  line('readings', readingDays, ['classic','negative'].map((mode,index)=>({label:mode==='classic'?'Clásico':'Negativo',borderColor:index?'#ba2121':'#417690',data:readingDays.map(day=>readingRows.find(row=>row.day===day&&row.mode===mode)?.count||0)})));
+  const costRows=data('costs-data'); line('costs',days(costRows),[{label:'USD',borderColor:'#417690',data:costRows.map(row=>Number(row.cost||0))}]);
+  const failureRows=data('failures-data'); line('failures',days(failureRows),[{label:'Fallos (%)',borderColor:'#ba2121',data:failureRows.map(row=>row.total?row.failed*100/row.total:0)}],{scales:{y:{min:0,max:100}}});
+  const spreadRows=data('spreads-data'); new Chart(document.getElementById('spreads'),{type:'doughnut',data:{labels:spreadRows.map(row=>row.spread),datasets:[{data:spreadRows.map(row=>row.count)}]},options:{maintainAspectRatio:false}});
+  const userRows=data('users-data'); line('users',days(userRows),[{label:'Usuarios',borderColor:'#5b8c5a',data:userRows.map(row=>row.count)}]);
+</script>
+{% endblock %}

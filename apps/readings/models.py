@@ -22,6 +22,34 @@ class ModelPricing(models.Model):
         return f'{self.model} desde {self.effective_from:%Y-%m-%d} ({self.currency})'
 
 
+class ApiTopUp(models.Model):
+    date = models.DateTimeField('fecha')
+    amount = models.DecimalField('monto en USD', max_digits=14, decimal_places=2)
+    note = models.TextField('nota', blank=True, default='')
+
+    class Meta:
+        ordering = ('-date',)
+        verbose_name = 'recarga de API'
+        verbose_name_plural = 'recargas de API'
+
+    def __str__(self):
+        return f'{self.date:%Y-%m-%d}: USD {self.amount}'
+
+
+class AnthropicCostReconciliation(models.Model):
+    start_date = models.DateField('inicio')
+    end_date = models.DateField('fin')
+    reported_cost = models.DecimalField('costo informado', max_digits=14, decimal_places=8)
+    local_cost = models.DecimalField('costo local', max_digits=14, decimal_places=8)
+    difference = models.DecimalField('diferencia', max_digits=14, decimal_places=8)
+    synced_at = models.DateTimeField('conciliado', auto_now_add=True)
+
+    class Meta:
+        ordering = ('-synced_at',)
+        verbose_name = 'conciliación de costos de Anthropic'
+        verbose_name_plural = 'conciliaciones de costos de Anthropic'
+
+
 class Reading(models.Model):
     class AddressAs(models.TextChoices):
         MASCULINE = 'masculine', 'Masculino'
