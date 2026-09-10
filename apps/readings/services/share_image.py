@@ -1,5 +1,6 @@
 """Renderizado reproducible de imágenes públicas para compartir lecturas."""
 import base64
+import re
 from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
@@ -59,11 +60,39 @@ def _draw_block(draw, text, *, xy, font, fill, width, spacing=12, max_lines=None
 
 
 def _verdict(reading):
+    """Devuelve la frase final cuando está aislada en su propio párrafo."""
+    paragraphs = [part.strip() for part in reading.ai_response.split('\n') if part.strip()]
+    if not paragraphs:
+        return None
+    candidate = paragraphs[-1]
+    sentences = [part for part in re.split(r'(?<=[.!?])\s+', candidate) if part]
+    return candidate if len(sentences) == 1 else None
+
+
+def _closing_text(reading):
+    verdict = _verdict(reading)
+    if verdict:
+        return verdict
     paragraphs = [part.strip() for part in reading.ai_response.split('\n') if part.strip()]
     return paragraphs[-1] if paragraphs else 'Tu lectura ya está lista.'
 
 
-def render(reading, *, fmt, include_question=True):
+def _draw_centered_block(draw, text, *, center_y, font, fill, width, max_lines):
+    lines = _lines(draw, text, font, width)
+    if len(lines) > max_lines:
+        lines = lines[:max_lines]
+        lines[-1] = lines[-1].rstrip('.,;:') + '…'
+    spacing = 18
+    line_height = font.size + spacing
+    y = center_y - (len(lines) * line_height - spacing) / 2
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line, font=font)
+        x = (draw._image.width - (bbox[2] - bbox[0])) / 2
+        draw.text((x, y), line, font=font, fill=fill)
+        y += line_height
+
+
+def render(reading, *, fmt):
     """Genera un PNG con datos no identificatorios de una lectura."""
     if fmt not in FORMATS:
         raise ValueError('El formato debe ser story, post u og.')
@@ -77,12 +106,12 @@ def render(reading, *, fmt, include_question=True):
         (margin // 2, margin // 2, width - margin // 2, height - margin // 2),
         radius=34, outline='#493761', width=3,
     )
-    draw.text((margin, margin), 'ASTRAL 999', font=_font(28, bold=True), fill=accent)
-
-    y = margin + 62
-    title_font = _font(44 if fmt != 'og' else 34, bold=True)
-    draw.text((margin, y), 'Tu tirada', font=title_font, fill='#f5efff')
-    y += title_font.size + 30
+    safe_top = 250 if fmt == 'story' else margin
+    safe_bottom = height - (250 if fmt == 'story' else margin)
+    y = safe_top + 20
+    title_font = _font(30 if fmt != 'og' else 24, bold=True)
+    draw.text((margin, y), 'LAS CARTAS', font=title_font, fill=accent)
+    y += title_font.size + 24
 
     ids = [item.get('card_id') for item in reading.cards_drawn]
     cards = {card.pk: card for card in TarotCard.objects.filter(pk__in=ids)}
@@ -90,59 +119,58 @@ def render(reading, *, fmt, include_question=True):
     for item in reading.cards_drawn:
         card = cards.get(item.get('card_id'))
         if card:
-            names.append(f"{card.name}{' · invertida' if item.get('reversed') else ''}")
-    cards_text = '  ✦  '.join(names) or 'Las cartas de tu tirada'
+            orientation = 'invertida' if item.get('reversed') else 'derecha'
+            names.append(f'{card.name} · {orientation}')
+    cards_text = '   ✦   '.join(names) or 'Las cartas de tu tirada'
     y = _draw_block(
-        draw, cards_text, xy=(margin, y), font=_font(25 if fmt == 'og' else 30),
+        draw, cards_text, xy=(margin, y), font=_font(25 if fmt == 'og' else 32, bold=True),
         fill='#cfc3dc', width=width - margin * 2, spacing=10, max_lines=3,
-    ) + 24
+    )
 
-    if include_question and reading.question:
-        draw.text((margin, y), 'LA PREGUNTA', font=_font(20, bold=True), fill=accent)
-        y += 34
-        y = _draw_block(
-            draw, reading.question, xy=(margin, y), font=_font(27 if fmt == 'og' else 32),
-            fill='#eee7f5', width=width - margin * 2, max_lines=3,
-        ) + 28
-
-    verdict = _verdict(reading)
+    verdict = _closing_text(reading)
     labels = {
         reading.Mode.CLASSIC: 'LA LECTURA',
         reading.Mode.NEGATIVE: 'EL VEREDICTO',
         reading.Mode.ROAST: 'EL REMATE',
     }
     label = labels[reading.mode]
-    draw.text((margin, y), label, font=_font(21, bold=True), fill=accent)
-    y += 42
-    verdict_size = 48 if fmt == 'og' else (64 if fmt == 'post' else 72)
-    available_height = height - y - 150
-    _draw_block(
-        draw, verdict, xy=(margin, y), font=_font(verdict_size, bold=True),
-        fill='#ffffff', width=width - margin * 2, spacing=18,
-        max_lines=max(2, available_height // (verdict_size + 18)),
+    verdict_size = 52 if fmt == 'og' else (
+        78 if reading.mode in (reading.Mode.NEGATIVE, reading.Mode.ROAST) else 68
+    )
+    center_y = (y + safe_bottom) // 2
+    label_font = _font(21, bold=True)
+    label_bbox = draw.textbbox((0, 0), label, font=label_font)
+    draw.text(
+        ((width - (label_bbox[2] - label_bbox[0])) / 2, center_y - verdict_size * 2),
+        label, font=label_font,
+        fill=accent if reading.mode == reading.Mode.ROAST else '#a99db7',
+    )
+    _draw_centered_block(
+        draw, verdict, center_y=center_y, font=_font(verdict_size, bold=True),
+        fill='#ffffff', width=width - margin * 2,
+        max_lines=3 if fmt == 'og' else 6,
     )
 
     watermark = 'Astral 999  ·  astral999.com'
     watermark_font = _font(21)
     bbox = draw.textbbox((0, 0), watermark, font=watermark_font)
     draw.text(
-        (width - margin - (bbox[2] - bbox[0]), height - margin - 24), watermark,
+        (width - margin - (bbox[2] - bbox[0]), safe_bottom - 24), watermark,
         font=watermark_font, fill='#867995',
     )
     return image
 
 
-def get_or_render(reading, *, fmt, include_question=True):
-    """Devuelve el archivo cacheado; solo renderiza una vez cada variante."""
+def get_or_render(reading, *, fmt):
+    """Devuelve el archivo cacheado; solo renderiza una vez cada formato."""
     if fmt not in FORMATS:
         raise ValueError('El formato debe ser story, post u og.')
-    privacy = 'question' if include_question else 'private'
     directory = Path(settings.MEDIA_ROOT) / 'share-images'
-    path = directory / f'{reading.share_token}-{fmt}-{privacy}.png'
+    path = directory / f'v2-{reading.share_token}-{fmt}.png'
     if path.exists():
         return path
     directory.mkdir(parents=True, exist_ok=True)
-    image = render(reading, fmt=fmt, include_question=include_question)
+    image = render(reading, fmt=fmt)
     temporary = path.with_suffix('.tmp')
     image.save(temporary, format='PNG', optimize=True)
     temporary.replace(path)

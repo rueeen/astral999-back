@@ -175,9 +175,8 @@ class SharedReadingImageView(APIView):
         except Reading.DoesNotExist as error:
             raise Http404 from error
         fmt = request.query_params.get('format', 'og')
-        include_question = request.query_params.get('question', 'true').lower() == 'true'
         try:
-            image_path = get_or_render(reading, fmt=fmt, include_question=include_question)
+            image_path = get_or_render(reading, fmt=fmt)
         except ValueError as error:
             return Response({'detail': str(error)}, status=status.HTTP_400_BAD_REQUEST)
         response = FileResponse(open(image_path, 'rb'), content_type='image/png')

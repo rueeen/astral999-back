@@ -24,7 +24,7 @@ from .quotas import _period
 from .services.ai import AIResult
 from .services.ai import generate_reading
 from .services.prompts import SPREAD_POSITIONS, build_system_prompt
-from .services.share_image import FORMATS, render
+from .services.share_image import FORMATS, _verdict, render
 from .services.feedback import build_few_shot_reference
 
 
@@ -338,10 +338,22 @@ class ShareImageTests(TestCase):
             with self.subTest(fmt=fmt):
                 self.assertEqual(render(self.reading, fmt=fmt).size, dimensions)
 
-    def test_omitting_question_changes_image_and_does_not_draw_its_text(self):
-        with_question = render(self.reading, fmt='og', include_question=True)
-        without_question = render(self.reading, fmt='og', include_question=False)
-        self.assertNotEqual(with_question.tobytes(), without_question.tobytes())
+    def test_render_does_not_accept_a_question_option(self):
+        with self.assertRaises(TypeError):
+            render(self.reading, fmt='og', include_question=True)
+
+    def test_question_query_parameter_is_ignored(self):
+        with TemporaryDirectory() as media_root, override_settings(MEDIA_ROOT=media_root):
+            url = f'/api/readings/shared/{self.reading.share_token}/image/?format=og'
+            without_parameter = b''.join(APIClient().get(url).streaming_content)
+            with_parameter = b''.join(APIClient().get(f'{url}&question=true').streaming_content)
+        self.assertEqual(without_parameter, with_parameter)
+
+    def test_classic_reading_without_isolated_final_sentence_renders(self):
+        self.reading.mode = Reading.Mode.CLASSIC
+        self.reading.ai_response = 'Una lectura clásica.\n\nEste párrafo tiene contexto. Y un cierre.'
+        self.assertIsNone(_verdict(self.reading))
+        self.assertEqual(render(self.reading, fmt='story').size, FORMATS['story'])
 
     def test_private_reading_image_returns_not_found(self):
         self.reading.is_public = False
