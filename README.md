@@ -84,3 +84,31 @@ hasta la respuesta y que el texto termine completo antes de habilitarlo en produ
 `GET /api/readings/` oculta por defecto las lecturas cuya generación falló. Para incluirlas
 en el historial administrativo o durante un diagnóstico, usa
 `GET /api/readings/?include_failed=true`. El detalle autenticado por id continúa disponible.
+
+## Mazo provisional de desarrollo
+
+Para probar el barajado, los patrones y las lecturas completas antes de disponer de los
+significados definitivos en español, se conserva una copia del dataset
+[`lsind18/tarot-json` de Kaggle](https://www.kaggle.com/datasets/lsind18/tarot-json) en
+`apps/cards/fixtures/dev/`. Después de cargar el catálogo oficial, puede aplicarse así:
+
+```bash
+python manage.py seed_cards
+python manage.py seed_dev_deck
+# Opcional: copia también los JPG a MEDIA_ROOT/cards/
+python manage.py seed_dev_deck --with-images
+```
+
+Este comando **solo es una semilla para desarrollo y pruebas**: reemplaza temporalmente
+los significados con texto provisional en inglés, no crea cartas y se niega a ejecutarse
+con `DEBUG=False` (salvo el escape explícito `--force`). No debe ejecutarse ni incluirse
+como parte de una carga de datos en producción.
+
+El origen de los significados es una guía publicada sin atribución dentro del dataset y
+su autorización para uso comercial no está resuelta. Las ilustraciones Rider-Waite-Smith
+de 1909 sí son de dominio público. Para mantener el repositorio compatible con revisiones
+de texto, los JPG se guardan como archivos `*.jpg.base64`; `--with-images` los decodifica
+al copiarlos a `MEDIA_ROOT`. En particular, las listas `light` y
+`shadow` describen facetas que pueden aparecer en cualquier orientación: la semilla las
+une en `meaning_up` y deja un marcador genérico inequívoco en `meaning_rev`; no interpreta
+«sombra» como «invertida».

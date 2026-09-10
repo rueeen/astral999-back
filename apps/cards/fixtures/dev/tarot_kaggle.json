@@ -1,0 +1,1898 @@
+{
+  "cards": [
+    {
+      "name": "The Fool",
+      "number": "0",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m00.jpg",
+      "keywords": [
+        "comienzos",
+        "inocencia",
+        "espontaneidad",
+        "aventura",
+        "salto de fe"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing comienzos with awareness",
+          "Making space for inocencia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of comienzos",
+          "Recognizing the difficult side of salto de fe"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "The Magician",
+      "number": "1",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m01.jpg",
+      "keywords": [
+        "manifestacion",
+        "voluntad",
+        "habilidad",
+        "recursos",
+        "intencion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing manifestacion with awareness",
+          "Making space for voluntad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of manifestacion",
+          "Recognizing the difficult side of intencion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "The High Priestess",
+      "number": "2",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m02.jpg",
+      "keywords": [
+        "intuicion",
+        "misterio",
+        "sabiduria interior",
+        "silencio",
+        "conocimiento oculto"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing intuicion with awareness",
+          "Making space for misterio"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of intuicion",
+          "Recognizing the difficult side of conocimiento oculto"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "The Empress",
+      "number": "3",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m03.jpg",
+      "keywords": [
+        "abundancia",
+        "cuidado",
+        "creatividad",
+        "fertilidad",
+        "sensualidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing abundancia with awareness",
+          "Making space for cuidado"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of abundancia",
+          "Recognizing the difficult side of sensualidad"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "The Emperor",
+      "number": "4",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m04.jpg",
+      "keywords": [
+        "autoridad",
+        "estructura",
+        "liderazgo",
+        "disciplina",
+        "proteccion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing autoridad with awareness",
+          "Making space for estructura"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of autoridad",
+          "Recognizing the difficult side of proteccion"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "The Hierophant",
+      "number": "5",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m05.jpg",
+      "keywords": [
+        "tradicion",
+        "enseñanza",
+        "creencias",
+        "ritual",
+        "mentoria"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing tradicion with awareness",
+          "Making space for enseñanza"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of tradicion",
+          "Recognizing the difficult side of mentoria"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "The Lovers",
+      "number": "6",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m06.jpg",
+      "keywords": [
+        "amor",
+        "eleccion",
+        "coherencia",
+        "pareja",
+        "valores"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing amor with awareness",
+          "Making space for eleccion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of amor",
+          "Recognizing the difficult side of valores"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "The Chariot",
+      "number": "7",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m07.jpg",
+      "keywords": [
+        "control",
+        "victoria",
+        "determinacion",
+        "direccion",
+        "autodisciplina"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing control with awareness",
+          "Making space for victoria"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of control",
+          "Recognizing the difficult side of autodisciplina"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Strength",
+      "number": "8",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m08.jpg",
+      "keywords": [
+        "coraje",
+        "compasion",
+        "fortaleza interior",
+        "paciencia",
+        "confianza"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing coraje with awareness",
+          "Making space for compasion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of coraje",
+          "Recognizing the difficult side of confianza"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "The Hermit",
+      "number": "9",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m09.jpg",
+      "keywords": [
+        "introspeccion",
+        "soledad",
+        "guia",
+        "sabiduria",
+        "busqueda interior"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing introspeccion with awareness",
+          "Making space for soledad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of introspeccion",
+          "Recognizing the difficult side of busqueda interior"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Wheel Of Fortune",
+      "number": "10",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m10.jpg",
+      "keywords": [
+        "ciclos",
+        "cambio",
+        "destino",
+        "punto de giro",
+        "fortuna"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing ciclos with awareness",
+          "Making space for cambio"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of ciclos",
+          "Recognizing the difficult side of fortuna"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Justice",
+      "number": "11",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m11.jpg",
+      "keywords": [
+        "equidad",
+        "verdad",
+        "responsabilidad",
+        "karma",
+        "decision"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing equidad with awareness",
+          "Making space for verdad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of equidad",
+          "Recognizing the difficult side of decision"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "The Hanged Man",
+      "number": "12",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m12.jpg",
+      "keywords": [
+        "pausa",
+        "entrega",
+        "nueva perspectiva",
+        "sacrificio",
+        "liberacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing pausa with awareness",
+          "Making space for entrega"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of pausa",
+          "Recognizing the difficult side of liberacion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Death",
+      "number": "13",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m13.jpg",
+      "keywords": [
+        "transformacion",
+        "finales",
+        "renovacion",
+        "liberacion",
+        "transicion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing transformacion with awareness",
+          "Making space for finales"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of transformacion",
+          "Recognizing the difficult side of transicion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Temperance",
+      "number": "14",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m14.jpg",
+      "keywords": [
+        "equilibrio",
+        "paciencia",
+        "moderacion",
+        "armonia",
+        "integracion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing equilibrio with awareness",
+          "Making space for paciencia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of equilibrio",
+          "Recognizing the difficult side of integracion"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "The Devil",
+      "number": "15",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m15.jpg",
+      "keywords": [
+        "apego",
+        "sombra",
+        "tentacion",
+        "atadura",
+        "liberacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing apego with awareness",
+          "Making space for sombra"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of apego",
+          "Recognizing the difficult side of liberacion"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "The Tower",
+      "number": "16",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m16.jpg",
+      "keywords": [
+        "crisis",
+        "revelacion",
+        "liberacion",
+        "derrumbe",
+        "despertar"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing crisis with awareness",
+          "Making space for revelacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of crisis",
+          "Recognizing the difficult side of despertar"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "The Star",
+      "number": "17",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m17.jpg",
+      "keywords": [
+        "esperanza",
+        "sanacion",
+        "inspiracion",
+        "renovacion",
+        "fe"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing esperanza with awareness",
+          "Making space for sanacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of esperanza",
+          "Recognizing the difficult side of fe"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "The Moon",
+      "number": "18",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m18.jpg",
+      "keywords": [
+        "ilusion",
+        "sueños",
+        "incertidumbre",
+        "intuicion",
+        "subconsciente"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing ilusion with awareness",
+          "Making space for sueños"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of ilusion",
+          "Recognizing the difficult side of subconsciente"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "The Sun",
+      "number": "19",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m19.jpg",
+      "keywords": [
+        "alegria",
+        "exito",
+        "vitalidad",
+        "claridad",
+        "optimismo"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing alegria with awareness",
+          "Making space for exito"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of alegria",
+          "Recognizing the difficult side of optimismo"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Judgement",
+      "number": "20",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m20.jpg",
+      "keywords": [
+        "despertar",
+        "reflexion",
+        "llamado",
+        "evaluacion",
+        "perdon"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing despertar with awareness",
+          "Making space for reflexion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of despertar",
+          "Recognizing the difficult side of perdon"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "The World",
+      "number": "21",
+      "arcana": "Major Arcana",
+      "suit": "Trump",
+      "img": "m21.jpg",
+      "keywords": [
+        "culminacion",
+        "integracion",
+        "realizacion",
+        "plenitud",
+        "logro"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing culminacion with awareness",
+          "Making space for integracion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of culminacion",
+          "Recognizing the difficult side of logro"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Ace of Wands",
+      "number": "1",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w01.jpg",
+      "keywords": [
+        "inicio",
+        "inspiracion",
+        "potencial",
+        "creatividad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing inicio with awareness",
+          "Making space for inspiracion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of inicio",
+          "Recognizing the difficult side of creatividad"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Two of Wands",
+      "number": "2",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w02.jpg",
+      "keywords": [
+        "decision",
+        "planificacion",
+        "horizontes",
+        "progreso"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing decision with awareness",
+          "Making space for planificacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of decision",
+          "Recognizing the difficult side of progreso"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Three of Wands",
+      "number": "3",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w03.jpg",
+      "keywords": [
+        "expansion",
+        "prevision",
+        "oportunidades",
+        "avance"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing expansion with awareness",
+          "Making space for prevision"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of expansion",
+          "Recognizing the difficult side of avance"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Four of Wands",
+      "number": "4",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w04.jpg",
+      "keywords": [
+        "celebracion",
+        "hogar",
+        "comunidad",
+        "estabilidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing celebracion with awareness",
+          "Making space for hogar"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of celebracion",
+          "Recognizing the difficult side of estabilidad"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Five of Wands",
+      "number": "5",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w05.jpg",
+      "keywords": [
+        "competencia",
+        "tension",
+        "desafio",
+        "diversidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing competencia with awareness",
+          "Making space for tension"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of competencia",
+          "Recognizing the difficult side of diversidad"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Six of Wands",
+      "number": "6",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w06.jpg",
+      "keywords": [
+        "victoria",
+        "reconocimiento",
+        "confianza",
+        "progreso"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing victoria with awareness",
+          "Making space for reconocimiento"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of victoria",
+          "Recognizing the difficult side of progreso"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Seven of Wands",
+      "number": "7",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w07.jpg",
+      "keywords": [
+        "defensa",
+        "conviccion",
+        "perseverancia",
+        "limites"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing defensa with awareness",
+          "Making space for conviccion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of defensa",
+          "Recognizing the difficult side of limites"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Eight of Wands",
+      "number": "8",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w08.jpg",
+      "keywords": [
+        "movimiento",
+        "rapidez",
+        "noticias",
+        "direccion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing movimiento with awareness",
+          "Making space for rapidez"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of movimiento",
+          "Recognizing the difficult side of direccion"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Nine of Wands",
+      "number": "9",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w09.jpg",
+      "keywords": [
+        "resiliencia",
+        "persistencia",
+        "cautela",
+        "fortaleza"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing resiliencia with awareness",
+          "Making space for persistencia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of resiliencia",
+          "Recognizing the difficult side of fortaleza"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Ten of Wands",
+      "number": "10",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w10.jpg",
+      "keywords": [
+        "carga",
+        "responsabilidad",
+        "esfuerzo",
+        "agotamiento"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing carga with awareness",
+          "Making space for responsabilidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of carga",
+          "Recognizing the difficult side of agotamiento"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Page of Wands",
+      "number": "11",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w11.jpg",
+      "keywords": [
+        "curiosidad",
+        "entusiasmo",
+        "descubrimiento",
+        "mensaje"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing curiosidad with awareness",
+          "Making space for entusiasmo"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of curiosidad",
+          "Recognizing the difficult side of mensaje"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Knight of Wands",
+      "number": "12",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w12.jpg",
+      "keywords": [
+        "accion",
+        "aventura",
+        "impulso",
+        "pasion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing accion with awareness",
+          "Making space for aventura"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of accion",
+          "Recognizing the difficult side of pasion"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Queen of Wands",
+      "number": "13",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w13.jpg",
+      "keywords": [
+        "confianza",
+        "calidez",
+        "determinacion",
+        "independencia"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing confianza with awareness",
+          "Making space for calidez"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of confianza",
+          "Recognizing the difficult side of independencia"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "King of Wands",
+      "number": "14",
+      "arcana": "Minor Arcana",
+      "suit": "Wands",
+      "img": "w14.jpg",
+      "keywords": [
+        "liderazgo",
+        "vision",
+        "carisma",
+        "iniciativa"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing liderazgo with awareness",
+          "Making space for vision"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of liderazgo",
+          "Recognizing the difficult side of iniciativa"
+        ]
+      },
+      "Elemental": "Fire"
+    },
+    {
+      "name": "Ace of Cups",
+      "number": "1",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c01.jpg",
+      "keywords": [
+        "apertura emocional",
+        "amor",
+        "intuicion",
+        "compasion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing apertura emocional with awareness",
+          "Making space for amor"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of apertura emocional",
+          "Recognizing the difficult side of compasion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Two of Cups",
+      "number": "2",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c02.jpg",
+      "keywords": [
+        "union",
+        "reciprocidad",
+        "acuerdo",
+        "vinculo"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing union with awareness",
+          "Making space for reciprocidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of union",
+          "Recognizing the difficult side of vinculo"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Three of Cups",
+      "number": "3",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c03.jpg",
+      "keywords": [
+        "amistad",
+        "celebracion",
+        "comunidad",
+        "alegria"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing amistad with awareness",
+          "Making space for celebracion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of amistad",
+          "Recognizing the difficult side of alegria"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Four of Cups",
+      "number": "4",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c04.jpg",
+      "keywords": [
+        "introspeccion",
+        "apatia",
+        "contemplacion",
+        "reevaluacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing introspeccion with awareness",
+          "Making space for apatia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of introspeccion",
+          "Recognizing the difficult side of reevaluacion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Five of Cups",
+      "number": "5",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c05.jpg",
+      "keywords": [
+        "perdida",
+        "duelo",
+        "decepcion",
+        "aceptacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing perdida with awareness",
+          "Making space for duelo"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of perdida",
+          "Recognizing the difficult side of aceptacion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Six of Cups",
+      "number": "6",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c06.jpg",
+      "keywords": [
+        "nostalgia",
+        "inocencia",
+        "recuerdos",
+        "generosidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing nostalgia with awareness",
+          "Making space for inocencia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of nostalgia",
+          "Recognizing the difficult side of generosidad"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Seven of Cups",
+      "number": "7",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c07.jpg",
+      "keywords": [
+        "opciones",
+        "fantasia",
+        "deseo",
+        "discernimiento"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing opciones with awareness",
+          "Making space for fantasia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of opciones",
+          "Recognizing the difficult side of discernimiento"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Eight of Cups",
+      "number": "8",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c08.jpg",
+      "keywords": [
+        "partida",
+        "busqueda",
+        "desapego",
+        "transicion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing partida with awareness",
+          "Making space for busqueda"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of partida",
+          "Recognizing the difficult side of transicion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Nine of Cups",
+      "number": "9",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c09.jpg",
+      "keywords": [
+        "satisfaccion",
+        "gratitud",
+        "placer",
+        "deseo cumplido"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing satisfaccion with awareness",
+          "Making space for gratitud"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of satisfaccion",
+          "Recognizing the difficult side of deseo cumplido"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Ten of Cups",
+      "number": "10",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c10.jpg",
+      "keywords": [
+        "armonia",
+        "familia",
+        "plenitud",
+        "pertenencia"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing armonia with awareness",
+          "Making space for familia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of armonia",
+          "Recognizing the difficult side of pertenencia"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Page of Cups",
+      "number": "11",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c11.jpg",
+      "keywords": [
+        "sensibilidad",
+        "intuicion",
+        "mensaje afectivo",
+        "imaginacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing sensibilidad with awareness",
+          "Making space for intuicion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of sensibilidad",
+          "Recognizing the difficult side of imaginacion"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Knight of Cups",
+      "number": "12",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c12.jpg",
+      "keywords": [
+        "romance",
+        "encanto",
+        "invitacion",
+        "idealismo"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing romance with awareness",
+          "Making space for encanto"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of romance",
+          "Recognizing the difficult side of idealismo"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Queen of Cups",
+      "number": "13",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c13.jpg",
+      "keywords": [
+        "empatia",
+        "serenidad",
+        "intuicion",
+        "cuidado"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing empatia with awareness",
+          "Making space for serenidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of empatia",
+          "Recognizing the difficult side of cuidado"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "King of Cups",
+      "number": "14",
+      "arcana": "Minor Arcana",
+      "suit": "Cups",
+      "img": "c14.jpg",
+      "keywords": [
+        "madurez emocional",
+        "diplomacia",
+        "compasion",
+        "equilibrio"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing madurez emocional with awareness",
+          "Making space for diplomacia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of madurez emocional",
+          "Recognizing the difficult side of equilibrio"
+        ]
+      },
+      "Elemental": "Water"
+    },
+    {
+      "name": "Ace of Swords",
+      "number": "1",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s01.jpg",
+      "keywords": [
+        "claridad",
+        "verdad",
+        "idea",
+        "decision"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing claridad with awareness",
+          "Making space for verdad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of claridad",
+          "Recognizing the difficult side of decision"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Two of Swords",
+      "number": "2",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s02.jpg",
+      "keywords": [
+        "indecision",
+        "equilibrio",
+        "pausa",
+        "proteccion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing indecision with awareness",
+          "Making space for equilibrio"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of indecision",
+          "Recognizing the difficult side of proteccion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Three of Swords",
+      "number": "3",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s03.jpg",
+      "keywords": [
+        "dolor",
+        "separacion",
+        "verdad dificil",
+        "pena"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing dolor with awareness",
+          "Making space for separacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of dolor",
+          "Recognizing the difficult side of pena"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Four of Swords",
+      "number": "4",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s04.jpg",
+      "keywords": [
+        "descanso",
+        "recuperacion",
+        "silencio",
+        "reflexion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing descanso with awareness",
+          "Making space for recuperacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of descanso",
+          "Recognizing the difficult side of reflexion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Five of Swords",
+      "number": "5",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s05.jpg",
+      "keywords": [
+        "conflicto",
+        "tension",
+        "victoria vacia",
+        "ego"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing conflicto with awareness",
+          "Making space for tension"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of conflicto",
+          "Recognizing the difficult side of ego"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Six of Swords",
+      "number": "6",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s06.jpg",
+      "keywords": [
+        "transicion",
+        "distancia",
+        "recuperacion",
+        "viaje"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing transicion with awareness",
+          "Making space for distancia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of transicion",
+          "Recognizing the difficult side of viaje"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Seven of Swords",
+      "number": "7",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s07.jpg",
+      "keywords": [
+        "estrategia",
+        "discrecion",
+        "evasion",
+        "astucia"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing estrategia with awareness",
+          "Making space for discrecion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of estrategia",
+          "Recognizing the difficult side of astucia"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Eight of Swords",
+      "number": "8",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s08.jpg",
+      "keywords": [
+        "restriccion",
+        "miedo",
+        "impotencia",
+        "perspectiva"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing restriccion with awareness",
+          "Making space for miedo"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of restriccion",
+          "Recognizing the difficult side of perspectiva"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Nine of Swords",
+      "number": "9",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s09.jpg",
+      "keywords": [
+        "ansiedad",
+        "culpa",
+        "insomnio",
+        "preocupacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing ansiedad with awareness",
+          "Making space for culpa"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of ansiedad",
+          "Recognizing the difficult side of preocupacion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Ten of Swords",
+      "number": "10",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s10.jpg",
+      "keywords": [
+        "final",
+        "colapso",
+        "agotamiento",
+        "aceptacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing final with awareness",
+          "Making space for colapso"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of final",
+          "Recognizing the difficult side of aceptacion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Page of Swords",
+      "number": "11",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s11.jpg",
+      "keywords": [
+        "curiosidad",
+        "vigilancia",
+        "ideas",
+        "comunicacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing curiosidad with awareness",
+          "Making space for vigilancia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of curiosidad",
+          "Recognizing the difficult side of comunicacion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Knight of Swords",
+      "number": "12",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s12.jpg",
+      "keywords": [
+        "velocidad",
+        "ambicion",
+        "franqueza",
+        "accion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing velocidad with awareness",
+          "Making space for ambicion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of velocidad",
+          "Recognizing the difficult side of accion"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Queen of Swords",
+      "number": "13",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s13.jpg",
+      "keywords": [
+        "lucidez",
+        "independencia",
+        "limites",
+        "honestidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing lucidez with awareness",
+          "Making space for independencia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of lucidez",
+          "Recognizing the difficult side of honestidad"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "King of Swords",
+      "number": "14",
+      "arcana": "Minor Arcana",
+      "suit": "Swords",
+      "img": "s14.jpg",
+      "keywords": [
+        "razon",
+        "autoridad",
+        "verdad",
+        "disciplina"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing razon with awareness",
+          "Making space for autoridad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of razon",
+          "Recognizing the difficult side of disciplina"
+        ]
+      },
+      "Elemental": "Air"
+    },
+    {
+      "name": "Ace of Pentacles",
+      "number": "1",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p01.jpg",
+      "keywords": [
+        "oportunidad",
+        "prosperidad",
+        "semilla",
+        "manifestacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing oportunidad with awareness",
+          "Making space for prosperidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of oportunidad",
+          "Recognizing the difficult side of manifestacion"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Two of Pentacles",
+      "number": "2",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p02.jpg",
+      "keywords": [
+        "adaptacion",
+        "equilibrio",
+        "prioridades",
+        "cambio"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing adaptacion with awareness",
+          "Making space for equilibrio"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of adaptacion",
+          "Recognizing the difficult side of cambio"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Three of Pentacles",
+      "number": "3",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p03.jpg",
+      "keywords": [
+        "colaboracion",
+        "aprendizaje",
+        "oficio",
+        "calidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing colaboracion with awareness",
+          "Making space for aprendizaje"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of colaboracion",
+          "Recognizing the difficult side of calidad"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Four of Pentacles",
+      "number": "4",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p04.jpg",
+      "keywords": [
+        "seguridad",
+        "control",
+        "posesion",
+        "conservacion"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing seguridad with awareness",
+          "Making space for control"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of seguridad",
+          "Recognizing the difficult side of conservacion"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Five of Pentacles",
+      "number": "5",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p05.jpg",
+      "keywords": [
+        "carencia",
+        "aislamiento",
+        "dificultad",
+        "apoyo"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing carencia with awareness",
+          "Making space for aislamiento"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of carencia",
+          "Recognizing the difficult side of apoyo"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Six of Pentacles",
+      "number": "6",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p06.jpg",
+      "keywords": [
+        "generosidad",
+        "intercambio",
+        "recursos",
+        "reciprocidad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing generosidad with awareness",
+          "Making space for intercambio"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of generosidad",
+          "Recognizing the difficult side of reciprocidad"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Seven of Pentacles",
+      "number": "7",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p07.jpg",
+      "keywords": [
+        "paciencia",
+        "evaluacion",
+        "cultivo",
+        "recompensa"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing paciencia with awareness",
+          "Making space for evaluacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of paciencia",
+          "Recognizing the difficult side of recompensa"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Eight of Pentacles",
+      "number": "8",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p08.jpg",
+      "keywords": [
+        "practica",
+        "dedicacion",
+        "maestria",
+        "constancia"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing practica with awareness",
+          "Making space for dedicacion"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of practica",
+          "Recognizing the difficult side of constancia"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Nine of Pentacles",
+      "number": "9",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p09.jpg",
+      "keywords": [
+        "autonomia",
+        "abundancia",
+        "disciplina",
+        "bienestar"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing autonomia with awareness",
+          "Making space for abundancia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of autonomia",
+          "Recognizing the difficult side of bienestar"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Ten of Pentacles",
+      "number": "10",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p10.jpg",
+      "keywords": [
+        "legado",
+        "familia",
+        "estabilidad",
+        "patrimonio"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing legado with awareness",
+          "Making space for familia"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of legado",
+          "Recognizing the difficult side of patrimonio"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Page of Pentacles",
+      "number": "11",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p11.jpg",
+      "keywords": [
+        "estudio",
+        "oportunidad",
+        "constancia",
+        "mensaje practico"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing estudio with awareness",
+          "Making space for oportunidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of estudio",
+          "Recognizing the difficult side of mensaje practico"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Knight of Pentacles",
+      "number": "12",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p12.jpg",
+      "keywords": [
+        "trabajo",
+        "rutina",
+        "responsabilidad",
+        "perseverancia"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing trabajo with awareness",
+          "Making space for rutina"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of trabajo",
+          "Recognizing the difficult side of perseverancia"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "Queen of Pentacles",
+      "number": "13",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p13.jpg",
+      "keywords": [
+        "cuidado",
+        "practicidad",
+        "abundancia",
+        "arraigo"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing cuidado with awareness",
+          "Making space for practicidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of cuidado",
+          "Recognizing the difficult side of arraigo"
+        ]
+      },
+      "Elemental": "Earth"
+    },
+    {
+      "name": "King of Pentacles",
+      "number": "14",
+      "arcana": "Minor Arcana",
+      "suit": "Pentacles",
+      "img": "p14.jpg",
+      "keywords": [
+        "solidez",
+        "prosperidad",
+        "administracion",
+        "seguridad"
+      ],
+      "meanings": {
+        "light": [
+          "Embracing solidez with awareness",
+          "Making space for prosperidad"
+        ],
+        "shadow": [
+          "Questioning an excess or absence of solidez",
+          "Recognizing the difficult side of seguridad"
+        ]
+      },
+      "Elemental": "Earth"
+    }
+  ]
+}

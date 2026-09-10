@@ -1,7 +1,7 @@
 from io import StringIO
 
-from django.core.management import call_command
-from django.test import TestCase
+from django.core.management import call_command, CommandError
+from django.test import TestCase, override_settings
 
 from .models import TarotCard
 from .serializers import TarotCardSerializer
@@ -48,3 +48,55 @@ class SeedCardsTests(TestCase):
         self.assertTrue(data['is_court'])
         self.assertIsNone(data['numerology'])
         self.assertIn(data['yes_no'], TarotCard.YesNo.values)
+
+
+@override_settings(DEBUG=True)
+class SeedDevDeckTests(TestCase):
+    def setUp(self):
+        call_command('seed_cards', stdout=StringIO())
+
+    def test_updates_all_official_cards_without_creating_records(self):
+        stdout = StringIO()
+
+        call_command('seed_dev_deck', stdout=stdout)
+
+        self.assertEqual(TarotCard.objects.count(), 78)
+        self.assertFalse(TarotCard.objects.filter(meaning_up='').exists())
+        fool = TarotCard.objects.get(slug='the-fool')
+        self.assertIn('PROVISIONAL EN INGLÉS', fool.meaning_up)
+        self.assertIn('luz y sombra, no orientación', fool.meaning_up)
+        self.assertIn('orientación invertida', fool.meaning_rev)
+        self.assertIn('contenido provisional en inglés', stdout.getvalue())
+
+    @override_settings(DEBUG=False)
+    def test_refuses_to_run_outside_debug_without_force(self):
+        with self.assertRaisesMessage(CommandError, 'solo para desarrollo'):
+            call_command('seed_dev_deck', stdout=StringIO())
+
+    @override_settings(DEBUG=False)
+    def test_force_allows_running_outside_debug(self):
+        call_command('seed_dev_deck', force=True, stdout=StringIO())
+
+        self.assertFalse(TarotCard.objects.filter(meaning_up='').exists())
+
+    def test_element_warning_names_slug_and_does_not_overwrite(self):
+        fool = TarotCard.objects.get(slug='the-fool')
+        fool.element = TarotCard.Element.FIRE
+        fool.save(update_fields=['element'])
+        stdout = StringIO()
+
+        call_command('seed_dev_deck', stdout=stdout)
+
+        fool.refresh_from_db()
+        self.assertEqual(fool.element, TarotCard.Element.FIRE)
+        self.assertIn('Elemento distinto para the-fool', stdout.getvalue())
+
+    def test_with_images_loads_dataset_files(self):
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as media_root, self.settings(MEDIA_ROOT=media_root):
+            call_command('seed_dev_deck', with_images=True, stdout=StringIO())
+            fool = TarotCard.objects.get(slug='the-fool')
+
+            self.assertEqual(fool.image.name, 'cards/m00.jpg')
+            self.assertTrue(fool.image.storage.exists(fool.image.name))
