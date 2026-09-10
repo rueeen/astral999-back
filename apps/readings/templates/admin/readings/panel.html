@@ -50,7 +50,12 @@
   const days = rows => [...new Set(rows.map(row => row.day))];
   const line = (id, labels, datasets, options = {}) => new Chart(document.getElementById(id), {type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,...options}});
   const readingRows=data('readings-data'), readingDays=days(readingRows);
-  line('readings', readingDays, ['classic','negative'].map((mode,index)=>({label:mode==='classic'?'Clásico':'Negativo',borderColor:index?'#ba2121':'#417690',data:readingDays.map(day=>readingRows.find(row=>row.day===day&&row.mode===mode)?.count||0)})));
+  const readingModes = {
+    classic: {label: 'Clásico', color: '#417690'},
+    negative: {label: 'Negativo', color: '#ba2121'},
+    roast: {label: 'Roast', color: '#d9822b'},
+  };
+  line('readings', readingDays, Object.entries(readingModes).map(([mode, config])=>({label:config.label,borderColor:config.color,data:readingDays.map(day=>readingRows.find(row=>row.day===day&&row.mode===mode)?.count||0)})));
   const costRows=data('costs-data'); line('costs',days(costRows),[{label:'USD',borderColor:'#417690',data:costRows.map(row=>Number(row.cost||0))}]);
   const failureRows=data('failures-data'); line('failures',days(failureRows),[{label:'Fallos (%)',borderColor:'#ba2121',data:failureRows.map(row=>row.total?row.failed*100/row.total:0)}],{scales:{y:{min:0,max:100}}});
   const spreadRows=data('spreads-data'); new Chart(document.getElementById('spreads'),{type:'doughnut',data:{labels:spreadRows.map(row=>row.spread),datasets:[{data:spreadRows.map(row=>row.count)}]},options:{maintainAspectRatio:false}});

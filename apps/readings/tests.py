@@ -60,6 +60,24 @@ class ReadingAPITests(TestCase):
         self.client.force_authenticate(self.user)
 
     @patch('apps.readings.views.generate_reading')
+    def test_free_user_can_create_roast_reading(self, generate):
+        generate.return_value = AIResult('Remate compartible.', 'modelo-test', 12, 8)
+
+        response = self.client.post('/api/readings/', {
+            'question': '¿Me compro el auto o espero?',
+            'spread': 'one_card',
+            'mode': Reading.Mode.ROAST,
+        })
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['mode'], Reading.Mode.ROAST)
+        self.assertEqual(response.data['ai_response'], 'Remate compartible.')
+        reading = Reading.objects.get(pk=response.data['id'])
+        self.assertEqual(reading.mode, Reading.Mode.ROAST)
+        generate.assert_called_once()
+        self.assertEqual(generate.call_args.kwargs['mode'], Reading.Mode.ROAST)
+
+    @patch('apps.readings.views.generate_reading')
     def test_free_user_cannot_create_fourth_monthly_reading(self, generate):
         for _ in range(3):
             make_reading(self.user)
@@ -258,13 +276,30 @@ class FeedbackDatasetTests(TestCase):
 
 class TreatmentPromptTests(TestCase):
     def test_prompts_preserve_safety_restrictions(self):
-        for mode in ('classic', 'negative'):
+        for mode in Reading.Mode.values:
             with self.subTest(mode=mode):
                 prompt = build_system_prompt(mode)
                 self.assertIn('dolor genuino', prompt)
                 self.assertIn('responde con seriedad y cuidado', prompt)
                 self.assertIn('No menciones salud, enfermedad', prompt)
                 self.assertIn('autolesiones', prompt)
+
+    def test_every_mode_uses_card_illustration_as_material(self):
+        for mode in Reading.Mode.values:
+            with self.subTest(mode=mode):
+                prompt = build_system_prompt(mode)
+                self.assertIn('imagen de la carta', prompt)
+                self.assertIn('Sol quema', prompt)
+                self.assertIn('Torre', prompt)
+
+    def test_roast_is_affectionate_funny_and_ends_with_a_shareable_punchline(self):
+        prompt = build_system_prompt(Reading.Mode.ROAST)
+
+        self.assertIn('Te ríes con ella, no de ella', prompt)
+        self.assertIn('abandona la comedia por completo', prompt)
+        self.assertIn('nunca a lo que la persona vale ni a su deseabilidad', prompt)
+        self.assertIn('menos de quince palabras', prompt)
+        self.assertIn('Tiene que dar risa sola, fuera de contexto', prompt)
 
     def test_masculine_instruction(self):
         prompt = build_system_prompt('classic', 'masculine')
