@@ -18,4 +18,6 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    # En producción PythonAnywhere sirve MEDIA_ROOT mediante su mapeo estático
+    # /media/; Django solo expone estos archivos durante el desarrollo local.
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

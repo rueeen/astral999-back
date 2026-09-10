@@ -95,6 +95,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -129,6 +130,8 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
 ANTHROPIC_MODEL = config('ANTHROPIC_MODEL', default='')
 ANTHROPIC_TIMEOUT = config('ANTHROPIC_TIMEOUT', default=30, cast=float)
+ANTHROPIC_PROXY = config('ANTHROPIC_PROXY', default='')
+MONTHLY_BUDGET = config('MONTHLY_BUDGET', default='0')
 _anthropic_temperature = config('ANTHROPIC_TEMPERATURE', default='')
 ANTHROPIC_TEMPERATURE = (
     float(_anthropic_temperature) if _anthropic_temperature != '' else None
@@ -146,8 +149,14 @@ READING_PLAN_LIMITS = {
 }
 
 if not DEBUG:
+    if len(SECRET_KEY) < 50:
+        raise ImproperlyConfigured(
+            'SECRET_KEY debe tener al menos 50 caracteres cuando DEBUG=False.'
+        )
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

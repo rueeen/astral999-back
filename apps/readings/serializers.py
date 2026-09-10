@@ -18,13 +18,16 @@ class ReadingSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'user', 'question', 'spread',
             'cards_drawn', 'cards_detail',
-            'ai_response', 'mode', 'status', 'model_used', 'tokens_used',
+            'ai_response', 'mode', 'status', 'model_used',
+            'input_tokens', 'output_tokens', 'cache_read_tokens',
+            'cache_creation_tokens', 'cost', 'cost_currency',
             'share_token', 'created_at', 'is_favorite',
             'is_public', 'address_as',
         )
         read_only_fields = (
             'id', 'user', 'cards_drawn', 'cards_detail',
-            'ai_response', 'status', 'model_used', 'tokens_used',
+            'ai_response', 'status', 'model_used', 'input_tokens', 'output_tokens',
+            'cache_read_tokens', 'cache_creation_tokens', 'cost', 'cost_currency',
             'share_token', 'created_at', 'is_favorite',
             'address_as',
         )

@@ -1,4 +1,5 @@
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+from decimal import Decimal
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -12,7 +13,7 @@ from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.cards.models import TarotCard
-from .models import Reading
+from .models import ModelPricing, Reading
 from .quotas import _period
 from .services.ai import AIResult
 from .services.ai import generate_reading
@@ -316,3 +317,53 @@ class AIServiceTests(TestCase):
 
         with self.assertRaisesRegex(RuntimeError, 'truncó'):
             self.call_service()
+
+
+class CostAccountingTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username='costos')
+        self.price = ModelPricing.objects.create(
+            model='modelo-costos', input_price_per_million='3.00',
+            output_price_per_million='15.00', cache_read_price_per_million='0.30',
+            cache_creation_price_per_million='3.75', currency='USD',
+            effective_from=timezone.now() - timedelta(days=1),
+        )
+
+    def test_cost_uses_each_token_category(self):
+        reading = make_reading(
+            self.user, model_used='modelo-costos', input_tokens=1000,
+            output_tokens=200, cache_read_tokens=500, cache_creation_tokens=100,
+        )
+        self.assertEqual(reading.cost, Decimal('0.00652500'))
+        self.assertEqual(reading.cost_currency, 'USD')
+
+    def test_later_price_change_does_not_recalculate_saved_cost(self):
+        reading = make_reading(
+            self.user, model_used='modelo-costos', input_tokens=1000, output_tokens=0,
+        )
+        original = reading.cost
+        self.price.input_price_per_million = '999'
+        self.price.save()
+        reading.question = 'Otra pregunta'
+        reading.save()
+        reading.refresh_from_db()
+        self.assertEqual(reading.cost, original)
+
+    @override_settings(MONTHLY_BUDGET='0.001')
+    @patch('apps.readings.views.generate_reading')
+    def test_budget_exceeded_does_not_call_anthropic(self, generate):
+        make_reading(
+            self.user, model_used='modelo-costos', input_tokens=1000, output_tokens=0,
+        )
+        TarotCard.objects.create(
+            name='Presupuesto', slug='presupuesto', arcana=TarotCard.Arcana.MAJOR,
+            number=21, meaning_up='Luz', meaning_rev='Sombra', keywords=[],
+        )
+        client = APIClient()
+        client.force_authenticate(self.user)
+        response = client.post('/api/readings/', {
+            'question': '¿Qué sucede?', 'spread': 'one_card', 'mode': 'classic',
+        })
+        self.assertEqual(response.status_code, 503)
+        self.assertIn('presupuesto mensual', str(response.data['detail']))
+        generate.assert_not_called()

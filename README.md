@@ -57,7 +57,9 @@ python manage.py test
 | `ANTHROPIC_API_KEY` | Clave de Anthropic. |
 | `ANTHROPIC_MODEL` | Identificador del modelo de Anthropic (por ejemplo, `claude-sonnet-4-5-20250929`). |
 | `ANTHROPIC_TIMEOUT` | Timeout de la llamada a Anthropic en segundos. |
+| `ANTHROPIC_PROXY` | Proxy HTTPS opcional; en PythonAnywhere gratuito usa `http://proxy.server:3128`. |
 | `ANTHROPIC_TEMPERATURE` | Temperatura opcional. Si no se define, Anthropic usa su valor predeterminado `1.0`. Los modelos de generación 5 rechazan valores distintos del predeterminado, por lo que conviene omitirla al usarlos. |
+| `MONTHLY_BUDGET` | Presupuesto mensual de generación, en la moneda de los precios cargados. `0` lo desactiva. |
 
 
 ## Elección del modelo de Anthropic
@@ -78,6 +80,86 @@ características en la documentación vigente de Anthropic:
 
 Tras cambiar de modelo, ejecuta algunas lecturas de prueba para comprobar el tono, el tiempo
 hasta la respuesta y que el texto termine completo antes de habilitarlo en producción.
+
+Los precios no están codificados en la aplicación. Antes de habilitar un modelo, crea en
+el admin una fila `ModelPricing` con los precios vigentes por millón de tokens y su fecha
+de inicio. Consulta siempre la [tabla oficial de precios de Claude](https://docs.claude.com/en/docs/about-claude/pricing).
+Puedes registrar también los precios específicos de lectura y creación de caché; si se
+omiten, el cálculo usa el precio normal de entrada. El costo queda materializado en cada
+lectura, por lo que editar precios futuros no reescribe el histórico. `python manage.py
+report_costs` muestra el total y promedio mensual, el desglose por modo y los diez usuarios
+de mayor consumo.
+
+El prompt de sistema se envía como bloque estable con caché efímera. Anthropic solo crea
+una entrada cuando el prefijo alcanza el mínimo exigido por el modelo (y la reutilización
+depende de que el prefijo sea idéntico y ocurra dentro del TTL); los contadores reales de
+creación y lectura devueltos por la API son los que se guardan. Revisa los
+[requisitos oficiales de prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
+al cambiar de modelo.
+
+## Despliegue en PythonAnywhere con frontend en Netlify
+
+Sigue este orden; no hace falta que Django sirva archivos estáticos o medios en producción:
+
+1. Crea el virtualenv, instala `requirements.txt` y configura en PythonAnywhere estas
+   variables: `DEBUG=False`, `SECRET_KEY`, `ALLOWED_HOSTS`, `DATABASE_URL`,
+   `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `MONTHLY_BUDGET`,
+   `CORS_ALLOWED_ORIGINS` y `CSRF_TRUSTED_ORIGINS`. Genera `SECRET_KEY` con:
+
+   ```bash
+   python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+   ```
+
+   Debe ser secreta y tener al menos 50 caracteres. Para un sitio Netlify en
+   `https://astral999.netlify.app`, usa exactamente:
+
+   ```dotenv
+   CORS_ALLOWED_ORIGINS=https://astral999.netlify.app
+   CSRF_TRUSTED_ORIGINS=https://astral999.netlify.app
+   ```
+
+   Sustituye ese host si Netlify asignó otro dominio; no añadas una barra final.
+   En cuentas gratuitas añade `ANTHROPIC_PROXY=http://proxy.server:3128`: el cliente
+   `httpx` enviará por él las solicitudes HTTPS a `api.anthropic.com`, incluido en la
+   lista permitida de PythonAnywhere.
+
+2. Aplica el esquema y recoge los estáticos:
+
+   ```bash
+   python manage.py migrate
+   python manage.py collectstatic --noinput
+   ```
+
+   `collectstatic` genera el directorio `staticfiles/`, incluidos los estilos del admin.
+
+3. Carga **solo los 22 arcanos mayores** mientras B1b esté pendiente:
+
+   ```bash
+   python manage.py seed_cards --only=major
+   ```
+
+   No cargues aún el mazo completo: 56 cartas menores tienen el significado vacío y
+   degradarían las lecturas.
+
+4. En la pestaña **Web > Static files** de PythonAnywhere crea ambos mapeos (las rutas
+   de disco son absolutas dentro de tu cuenta):
+
+   | URL | Directorio |
+   | --- | --- |
+   | `/static/` | `<ruta-del-repo>/staticfiles` (`STATIC_ROOT`) |
+   | `/media/` | `<ruta-del-repo>/media` (`MEDIA_ROOT`) |
+
+   El segundo sirve tanto `share-images/` como imágenes de cartas. Es intencional que
+   `config/urls.py` solo monte medios con `DEBUG=True`; en producción los entrega el
+   servidor estático de PythonAnywhere.
+
+5. Configura el archivo WSGI para importar `config.wsgi.application`, recarga la app y
+   verifica antes de abrir tráfico:
+
+   ```bash
+   DEBUG=False SECRET_KEY='<clave-de-50+-caracteres>' \
+     ALLOWED_HOSTS='<usuario>.pythonanywhere.com' python manage.py check --deploy
+   ```
 
 ## Historial de lecturas fallidas
 
