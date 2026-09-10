@@ -16,6 +16,7 @@ class User(AbstractUser):
     email = models.EmailField('email', unique=True)
     plan = models.CharField(max_length=10, choices=Plan.choices, default=Plan.FREE)
     plan_expires_at = models.DateTimeField(blank=True, null=True)
+    is_trial_grant = models.BooleanField(default=False)
     address_as = models.CharField(
         'preferencia de tratamiento', max_length=10,
         choices=AddressAs.choices, default=AddressAs.NEUTRAL,

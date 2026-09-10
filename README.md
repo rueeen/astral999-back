@@ -60,6 +60,30 @@ python manage.py test
 | `ANTHROPIC_PROXY` | Proxy HTTPS opcional; en PythonAnywhere gratuito usa `http://proxy.server:3128`. |
 | `ANTHROPIC_TEMPERATURE` | Temperatura opcional. Si no se define, Anthropic usa su valor predeterminado `1.0`. Los modelos de generación 5 rechazan valores distintos del predeterminado, por lo que conviene omitirla al usarlos. |
 | `MONTHLY_BUDGET` | Presupuesto mensual de generación, en la moneda de los precios cargados. `0` lo desactiva. |
+| `TRIAL_MODE` | Activa (`True`) la concesión temporal del plan premium. Por defecto es `False`. |
+| `TRIAL_ENDS_AT` | Fecha/hora ISO de vencimiento obligatoria cuando `TRIAL_MODE=True`. |
+
+### Modo de prueba premium y advertencia de costos
+
+Con `TRIAL_MODE=True`, los registros nuevos reciben premium hasta `TRIAL_ENDS_AT`. Después
+de activarlo, concede la misma promoción a las cuentas existentes con `python manage.py
+grant_trial_plan`; usa primero `python manage.py grant_trial_plan --dry-run` para revisar
+cuántas cambiarían. Desactivar `TRIAL_MODE` restaura el registro gratuito sin migrar datos,
+y las concesiones existentes caducan automáticamente en la fecha configurada.
+
+**Advertencia:** premium significa **lecturas ilimitadas**. Con el saldo actual de la API
+y un costo aproximado de medio centavo de dólar por lectura, unas decenas de personas
+activas pueden agotar el saldo en pocas horas. Para el usuario, el síntoma será el 503
+genérico «el servicio de interpretación no está disponible».
+
+Antes de activar `TRIAL_MODE=True` en producción:
+
+1. `MONTHLY_BUDGET` (B18) debe tener un valor real y su freno debe estar verificado con un test.
+2. Revisa el throttle `reading_create`, actualmente en 10 por hora; con plan ilimitado es
+   lo único que limita a un usuario individual y conviene considerar reducirlo.
+3. Añade un tope diario global de lecturas, independiente del presupuesto en dólares, como
+   segunda red. El presupuesto protege la billetera; el tope diario evita que un bucle la
+   vacíe en minutos.
 
 
 ## Elección del modelo de Anthropic

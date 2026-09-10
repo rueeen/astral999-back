@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
+
+from .trial import get_trial_ends_at
 
 User = get_user_model()
 
@@ -20,11 +23,18 @@ class RegisterSerializer(serializers.ModelSerializer):
             'id', 'username', 'email', 'password',
             'first_name', 'last_name', 'bio', 'avatar',
             'birth_date', 'birth_time', 'birth_place',
+            'plan', 'plan_expires_at',
         )
-        read_only_fields = ('id',)
+        read_only_fields = ('id', 'plan', 'plan_expires_at')
 
     def create(self, validated_data):
         password = validated_data.pop('password')
+        if settings.TRIAL_MODE:
+            validated_data.update(
+                plan=User.Plan.PREMIUM,
+                plan_expires_at=get_trial_ends_at(),
+                is_trial_grant=True,
+            )
         user = User(**validated_data)
         user.set_password(password)
         user.save()
@@ -45,6 +55,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     zodiac_sign = serializers.SerializerMethodField()
+    plan = serializers.SerializerMethodField()
     email = serializers.EmailField(required=True, validators=[])
 
     class Meta:
@@ -54,9 +65,12 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name', 'last_name', 'bio', 'avatar',
             'birth_date', 'birth_time', 'birth_place',
             'address_as',
-            'zodiac_sign',
+            'zodiac_sign', 'plan', 'plan_expires_at',
         )
-        read_only_fields = ('id', 'username', 'zodiac_sign')
+        read_only_fields = ('id', 'username', 'zodiac_sign', 'plan', 'plan_expires_at')
+
+    def get_plan(self, obj):
+        return User.Plan.PREMIUM if obj.is_premium else User.Plan.FREE
 
     def get_zodiac_sign(self, obj):
         return obj.get_zodiac_sign()

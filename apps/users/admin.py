@@ -10,6 +10,6 @@ class CustomUserAdmin(UserAdmin):
         'Perfil',
         {'fields': (
             'bio', 'avatar', 'birth_date', 'birth_time', 'birth_place',
-            'plan', 'plan_expires_at',
+            'plan', 'plan_expires_at', 'is_trial_grant',
         )},
     ),)
