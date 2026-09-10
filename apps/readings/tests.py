@@ -21,7 +21,7 @@ from .models import AnthropicCostReconciliation, ApiTopUp, ModelPricing, Reading
 from .quotas import _period
 from .services.ai import AIResult
 from .services.ai import generate_reading
-from .services.prompts import build_system_prompt
+from .services.prompts import SPREAD_POSITIONS, build_system_prompt
 from .services.share_image import FORMATS, render
 
 
@@ -186,12 +186,14 @@ class ReadingAPITests(TestCase):
 
 
 class TreatmentPromptTests(TestCase):
-    def test_negative_prompt_preserves_safety_restrictions(self):
-        prompt = build_system_prompt('negative')
-        self.assertIn('Si la pregunta trae dolor genuino', prompt)
-        self.assertIn('abandona el registro por completo y responde con seriedad y cuidado', prompt)
-        self.assertIn('No menciones salud, enfermedad', prompt)
-        self.assertIn('autolesiones, ni siquiera de pasada', prompt)
+    def test_prompts_preserve_safety_restrictions(self):
+        for mode in ('classic', 'negative'):
+            with self.subTest(mode=mode):
+                prompt = build_system_prompt(mode)
+                self.assertIn('dolor genuino', prompt)
+                self.assertIn('responde con seriedad y cuidado', prompt)
+                self.assertIn('No menciones salud, enfermedad', prompt)
+                self.assertIn('autolesiones', prompt)
 
     def test_masculine_instruction(self):
         prompt = build_system_prompt('classic', 'masculine')
@@ -280,6 +282,32 @@ class AIServiceTests(TestCase):
             cards=[{'card': self.card, 'position': 1, 'reversed': False}],
             mode='classic', user=self.user,
         )
+
+    @patch('apps.readings.services.ai.Anthropic')
+    def test_prompt_describes_every_position_for_each_spread(self, anthropic):
+        anthropic.return_value.messages.create.return_value = SimpleNamespace(
+            content=[SimpleNamespace(type='text', text='Lectura completa.')],
+            usage=SimpleNamespace(input_tokens=10, output_tokens=20),
+            model='modelo-respuesta', stop_reason='end_turn',
+        )
+
+        for spread, positions in SPREAD_POSITIONS.items():
+            cards = [
+                {'card': self.card, 'position': index, 'reversed': False}
+                for index in range(1, len(positions) + 1)
+            ]
+            with self.subTest(spread=spread):
+                generate_reading(
+                    question='¿Qué necesito saber?', spread=spread, cards=cards,
+                    mode='classic', user=self.user,
+                )
+                prompt = anthropic.return_value.messages.create.call_args.kwargs['messages'][0][
+                    'content'
+                ]
+                for position in positions:
+                    self.assertIn(position, prompt)
+                self.assertIn('cada carta en función de su posición', prompt)
+                self.assertIn('«obstáculo» y en «desenlace»', prompt)
 
     @patch('apps.readings.services.ai.Anthropic')
     @override_settings(ANTHROPIC_TEMPERATURE=None)
