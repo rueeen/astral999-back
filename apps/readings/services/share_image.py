@@ -105,12 +105,13 @@ def render(reading, *, fmt, include_question=True):
             fill='#eee7f5', width=width - margin * 2, max_lines=3,
         ) + 28
 
-    if reading.mode == reading.Mode.NEGATIVE:
-        verdict = _verdict(reading)
-        label = 'EL VEREDICTO'
-    else:
-        verdict = _verdict(reading)
-        label = 'LA LECTURA'
+    verdict = _verdict(reading)
+    labels = {
+        reading.Mode.CLASSIC: 'LA LECTURA',
+        reading.Mode.NEGATIVE: 'EL VEREDICTO',
+        reading.Mode.ROAST: 'EL REMATE',
+    }
+    label = labels[reading.mode]
     draw.text((margin, y), label, font=_font(21, bold=True), fill=accent)
     y += 42
     verdict_size = 48 if fmt == 'og' else (64 if fmt == 'post' else 72)

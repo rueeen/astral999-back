@@ -59,6 +59,7 @@ class Reading(models.Model):
     class Mode(models.TextChoices):
         CLASSIC = 'classic', 'Clásico'
         NEGATIVE = 'negative', 'Negativo'
+        ROAST = 'roast', 'Roast'
 
     class Status(models.TextChoices):
         PENDING = 'pending', 'Pendiente'
