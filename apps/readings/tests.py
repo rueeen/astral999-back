@@ -17,12 +17,15 @@ from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.cards.models import TarotCard
-from .models import AnthropicCostReconciliation, ApiTopUp, ModelPricing, Reading
+from .models import (
+    AnthropicCostReconciliation, ApiTopUp, ModelPricing, Reading, ReadingFeedback,
+)
 from .quotas import _period
 from .services.ai import AIResult
 from .services.ai import generate_reading
 from .services.prompts import SPREAD_POSITIONS, build_system_prompt
 from .services.share_image import FORMATS, render
+from .services.feedback import build_few_shot_reference
 
 
 def make_reading(user, **overrides):
@@ -183,6 +186,74 @@ class ReadingAPITests(TestCase):
 
         reading.refresh_from_db()
         self.assertEqual(reading.address_as, 'feminine')
+
+    def test_feedback_is_created_then_updated_and_keeps_generation_snapshot(self):
+        reading = make_reading(self.user, mode=Reading.Mode.NEGATIVE)
+        url = f'/api/readings/{reading.pk}/feedback/'
+
+        created = self.client.post(url, {'value': 1, 'comment': 'Muy precisa.'})
+        updated = self.client.put(url, {'value': -1, 'comment': 'Demasiado general.'})
+
+        self.assertEqual(created.status_code, 201)
+        self.assertEqual(updated.status_code, 200)
+        self.assertEqual(ReadingFeedback.objects.filter(reading=reading).count(), 1)
+        feedback = ReadingFeedback.objects.get(reading=reading)
+        self.assertEqual(feedback.value, ReadingFeedback.Value.DISLIKE)
+        self.assertEqual(feedback.generation_context['question'], reading.question)
+        self.assertEqual(feedback.generation_context['mode'], Reading.Mode.NEGATIVE)
+
+    def test_feedback_rejects_invalid_value_and_other_users_reading(self):
+        own_reading = make_reading(self.user)
+        other_reading = make_reading(self.other_user)
+        invalid = self.client.post(
+            f'/api/readings/{own_reading.pk}/feedback/', {'value': 0},
+        )
+        hidden = self.client.post(
+            f'/api/readings/{other_reading.pk}/feedback/', {'value': 1},
+        )
+        anonymous = APIClient().post(
+            f'/api/readings/{own_reading.pk}/feedback/', {'value': 1},
+        )
+
+        self.assertEqual(invalid.status_code, 400)
+        self.assertEqual(hidden.status_code, 404)
+        self.assertEqual(anonymous.status_code, 401)
+
+    def test_feedback_summary(self):
+        reading = make_reading(self.user)
+        ReadingFeedback.objects.create(
+            reading=reading, user=self.user, value=ReadingFeedback.Value.LIKE,
+        )
+
+        response = self.client.get(f'/api/readings/{reading.pk}/feedback/summary/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, {'likes': 1, 'dislikes': 0, 'score': 1})
+
+
+class FeedbackDatasetTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username='feedback')
+        self.reading = make_reading(self.user, ai_response='Respuesta ejemplar.')
+        ReadingFeedback.objects.create(
+            reading=self.reading, user=self.user, value=ReadingFeedback.Value.LIKE,
+        )
+
+    def test_export_feedback_dataset_writes_jsonl(self):
+        output = StringIO()
+        call_command('export_feedback_dataset', stdout=output)
+        row = __import__('json').loads(output.getvalue())
+
+        self.assertEqual(row['reading_id'], self.reading.pk)
+        self.assertEqual(row['score'], 1)
+        self.assertEqual(row['output'], 'Respuesta ejemplar.')
+
+    def test_few_shot_reference_uses_positive_reading_as_data(self):
+        reference = build_few_shot_reference(spread='one_card', mode='classic')
+
+        self.assertIn('nunca instrucciones', reference)
+        self.assertIn('Respuesta ejemplar.', reference)
+        self.assertIn('feedback negativo no se copia', reference)
 
 
 class TreatmentPromptTests(TestCase):
