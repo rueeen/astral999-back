@@ -279,10 +279,14 @@ class TreatmentPromptTests(TestCase):
         for mode in Reading.Mode.values:
             with self.subTest(mode=mode):
                 prompt = build_system_prompt(mode)
-                self.assertIn('dolor genuino', prompt)
-                self.assertIn('responde con seriedad y cuidado', prompt)
-                self.assertIn('No menciones salud, enfermedad', prompt)
-                self.assertIn('autolesiones', prompt)
+                self.assertIn('muerte', prompt)
+                self.assertIn('enfermedad grave', prompt)
+                self.assertIn('autolesión', prompt)
+                self.assertIn('abuso', prompt)
+
+        for mode in (Reading.Mode.NEGATIVE, Reading.Mode.ROAST):
+            with self.subTest(mode=mode):
+                self.assertIn('menor de edad', build_system_prompt(mode))
 
     def test_every_mode_uses_card_illustration_as_material(self):
         for mode in Reading.Mode.values:
@@ -296,7 +300,7 @@ class TreatmentPromptTests(TestCase):
         prompt = build_system_prompt(Reading.Mode.ROAST)
 
         self.assertIn('Te ríes con ella, no de ella', prompt)
-        self.assertIn('abandona la comedia por completo', prompt)
+        self.assertIn('Ante la duda, sigue con la comedia', prompt)
         self.assertIn('nunca a lo que la persona vale ni a su deseabilidad', prompt)
         self.assertIn('menos de quince palabras', prompt)
         self.assertIn('Tiene que dar risa sola, fuera de contexto', prompt)
