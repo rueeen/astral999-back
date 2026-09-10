@@ -27,3 +27,27 @@ SYSTEM_PROMPTS = {
         'el veredicto. Tiene que ser lapidaria, citable y funcionar sola, fuera de contexto.\n'
     ),
 }
+
+ADDRESS_INSTRUCTIONS = {
+    'masculine': (
+        'Tratamiento gramatical: usa el masculino y haz concordar en masculino todos los '
+        'adjetivos y participios que se refieran a quien consulta.'
+    ),
+    'feminine': (
+        'Tratamiento gramatical: usa el femenino y haz concordar en femenino todos los '
+        'adjetivos y participios que se refieran a quien consulta.'
+    ),
+    'neutral': (
+        'Tratamiento gramatical: evita atribuir una terminación masculina o femenina a quien '
+        'consulta. No uses terminaciones con «e», «@» ni «x». Reformula mediante sustantivos, '
+        'construcciones verbales y, cuando haga falta, perífrasis como «quien consulta» o «tu '
+        'persona». Ejemplos: escribe «sientes cansancio» en vez de «estás cansado»; «te agota '
+        'esta situación» en vez de «estás agotada»; y «hay confusión en tu persona» en vez de '
+        '«estás confundido».'
+    ),
+}
+
+
+def build_system_prompt(mode, address_as='neutral'):
+    """Construye el prompt con la preferencia de tratamiento vigente."""
+    return f'{SYSTEM_PROMPTS[mode]}\n{ADDRESS_INSTRUCTIONS.get(address_as, ADDRESS_INSTRUCTIONS["neutral"])}'

@@ -2,6 +2,7 @@ import logging
 from random import choice, sample
 
 from django.core.exceptions import ImproperlyConfigured
+from django.http import FileResponse, Http404
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import APIException
 from rest_framework.throttling import ScopedRateThrottle
@@ -13,6 +14,7 @@ from .models import Reading
 from .serializers import ReadingSerializer, SharedReadingSerializer, SPREAD_CARD_COUNTS
 from .quotas import validate_quota
 from .services.ai import generate_reading
+from .services.share_image import get_or_render
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +63,7 @@ class ReadingListCreateView(generics.ListCreateAPIView):
             user=self.request.user,
             cards_drawn=cards_drawn,
             status=Reading.Status.PENDING,
+            address_as=self.request.user.address_as,
         )
         drawn_with_cards = [
             {**item, 'card': card}
@@ -100,6 +103,18 @@ class ReadingDetailView(generics.RetrieveAPIView):
     def get_queryset(self):
         return Reading.objects.filter(user=self.request.user)
 
+    def patch(self, request, *args, **kwargs):
+        reading = self.get_object()
+        is_public = request.data.get('is_public')
+        if not isinstance(is_public, bool):
+            return Response(
+                {'detail': 'El campo is_public debe ser verdadero o falso.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        reading.is_public = is_public
+        reading.save(update_fields=('is_public',))
+        return Response(self.get_serializer(reading).data)
+
 
 class ReadingFavoriteToggleView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -121,7 +136,28 @@ class ReadingFavoriteToggleView(APIView):
 
 
 class SharedReadingView(generics.RetrieveAPIView):
-    queryset = Reading.objects.filter(status=Reading.Status.READY)
+    queryset = Reading.objects.filter(status=Reading.Status.READY, is_public=True)
     serializer_class = SharedReadingSerializer
     permission_classes = (permissions.AllowAny,)
     lookup_field = 'share_token'
+
+
+class SharedReadingImageView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, share_token):
+        try:
+            reading = Reading.objects.get(
+                share_token=share_token, status=Reading.Status.READY, is_public=True,
+            )
+        except Reading.DoesNotExist as error:
+            raise Http404 from error
+        fmt = request.query_params.get('format', 'og')
+        include_question = request.query_params.get('question', 'true').lower() == 'true'
+        try:
+            image_path = get_or_render(reading, fmt=fmt, include_question=include_question)
+        except ValueError as error:
+            return Response({'detail': str(error)}, status=status.HTTP_400_BAD_REQUEST)
+        response = FileResponse(open(image_path, 'rb'), content_type='image/png')
+        response['Cache-Control'] = 'public, max-age=31536000, immutable'
+        return response

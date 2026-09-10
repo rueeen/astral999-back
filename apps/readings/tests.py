@@ -7,6 +7,7 @@ from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured
 from django.test import override_settings
 from django.test import TestCase
+from tempfile import TemporaryDirectory
 from django.utils import timezone
 from rest_framework.test import APIClient
 
@@ -15,6 +16,8 @@ from .models import Reading
 from .quotas import _period
 from .services.ai import AIResult
 from .services.ai import generate_reading
+from .services.prompts import build_system_prompt
+from .services.share_image import FORMATS, render
 
 
 def make_reading(user, **overrides):
@@ -158,6 +161,82 @@ class ReadingAPITests(TestCase):
         response = self.client.get(f'/api/readings/{failed.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['status'], Reading.Status.FAILED)
+
+    @patch('apps.readings.views.generate_reading')
+    def test_reading_keeps_treatment_used_when_generated(self, generate):
+        self.user.address_as = 'feminine'
+        self.user.save(update_fields=('address_as',))
+        generate.return_value = AIResult('Lectura.', 'modelo-test', 8)
+
+        response = self.client.post('/api/readings/', {
+            'question': '¿Qué veo?', 'spread': 'one_card', 'mode': 'classic',
+        })
+        self.assertEqual(response.status_code, 201)
+        reading = Reading.objects.get(pk=response.data['id'])
+        self.user.address_as = 'masculine'
+        self.user.save(update_fields=('address_as',))
+
+        reading.refresh_from_db()
+        self.assertEqual(reading.address_as, 'feminine')
+
+
+class TreatmentPromptTests(TestCase):
+    def test_masculine_instruction(self):
+        prompt = build_system_prompt('classic', 'masculine')
+        self.assertIn('concordar en masculino todos los adjetivos y participios', prompt)
+
+    def test_feminine_instruction(self):
+        prompt = build_system_prompt('classic', 'feminine')
+        self.assertIn('concordar en femenino todos los adjetivos y participios', prompt)
+
+    def test_neutral_instruction_uses_rephrasing_and_examples(self):
+        prompt = build_system_prompt('classic', 'neutral')
+        self.assertIn('sientes cansancio', prompt)
+        self.assertIn('te agota esta situación', prompt)
+        self.assertIn('No uses terminaciones con «e», «@» ni «x»', prompt)
+
+
+class ShareImageTests(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(username='imagen')
+        self.card = TarotCard.objects.create(
+            name='La Estrella', slug='estrella-imagen', arcana=TarotCard.Arcana.MAJOR,
+            number=17, meaning_up='Esperanza', meaning_rev='Desánimo', keywords=[],
+        )
+        self.reading = make_reading(
+            self.user, question='¿Debo cambiar de rumbo?', mode=Reading.Mode.NEGATIVE,
+            ai_response='Interpretación.\n\nEl mapa no decide por ti.',
+            cards_drawn=[{'card_id': self.card.pk, 'position': 1, 'reversed': False}],
+        )
+
+    def test_exact_dimensions_for_every_format(self):
+        for fmt, dimensions in FORMATS.items():
+            with self.subTest(fmt=fmt):
+                self.assertEqual(render(self.reading, fmt=fmt).size, dimensions)
+
+    def test_omitting_question_changes_image_and_does_not_draw_its_text(self):
+        with_question = render(self.reading, fmt='og', include_question=True)
+        without_question = render(self.reading, fmt='og', include_question=False)
+        self.assertNotEqual(with_question.tobytes(), without_question.tobytes())
+
+    def test_private_reading_image_returns_not_found(self):
+        self.reading.is_public = False
+        self.reading.save(update_fields=('is_public',))
+        response = APIClient().get(
+            f'/api/readings/shared/{self.reading.share_token}/image/?format=story',
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_second_request_uses_cached_file(self):
+        with TemporaryDirectory() as media_root, override_settings(MEDIA_ROOT=media_root), patch(
+            'apps.readings.services.share_image.render', wraps=render,
+        ) as renderer:
+            url = f'/api/readings/shared/{self.reading.share_token}/image/?format=og&question=false'
+            first = APIClient().get(url)
+            second = APIClient().get(url)
+            self.assertEqual(first.status_code, 200)
+            self.assertEqual(second.status_code, 200)
+            self.assertEqual(renderer.call_count, 1)
 
 
 class QuotaPeriodTests(TestCase):

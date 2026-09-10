@@ -4,6 +4,11 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
+    class AddressAs(models.TextChoices):
+        MASCULINE = 'masculine', 'Masculino'
+        FEMININE = 'feminine', 'Femenino'
+        NEUTRAL = 'neutral', 'Neutro'
+
     class Plan(models.TextChoices):
         FREE = 'free', 'Gratis'
         PREMIUM = 'premium', 'Premium'
@@ -11,6 +16,10 @@ class User(AbstractUser):
     email = models.EmailField('email', unique=True)
     plan = models.CharField(max_length=10, choices=Plan.choices, default=Plan.FREE)
     plan_expires_at = models.DateTimeField(blank=True, null=True)
+    address_as = models.CharField(
+        'preferencia de tratamiento', max_length=10,
+        choices=AddressAs.choices, default=AddressAs.NEUTRAL,
+    )
     bio = models.TextField(blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
