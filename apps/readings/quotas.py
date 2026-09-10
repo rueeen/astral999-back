@@ -1,8 +1,10 @@
 from calendar import monthrange
 from datetime import UTC, timedelta
+from decimal import Decimal
 
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Sum
 from rest_framework.exceptions import APIException
 
 from .models import Reading
@@ -57,3 +59,10 @@ def validate_quota(user, spread):
             **{key: quota[key] for key in ('plan', 'used', 'limit', 'resets_at')},
         })
     return quota
+
+
+def current_month_cost():
+    start, end = _period()
+    return Reading.objects.filter(
+        created_at__gte=start, created_at__lt=end, cost__isnull=False,
+    ).aggregate(total=Sum('cost'))['total'] or Decimal('0')

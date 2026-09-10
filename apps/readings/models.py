@@ -1,6 +1,25 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
+from decimal import Decimal
 import uuid
+
+
+class ModelPricing(models.Model):
+    model = models.CharField(max_length=120)
+    input_price_per_million = models.DecimalField(max_digits=12, decimal_places=6)
+    output_price_per_million = models.DecimalField(max_digits=12, decimal_places=6)
+    cache_read_price_per_million = models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
+    cache_creation_price_per_million = models.DecimalField(max_digits=12, decimal_places=6, blank=True, null=True)
+    currency = models.CharField(max_length=3, default='USD')
+    effective_from = models.DateTimeField()
+
+    class Meta:
+        ordering = ('-effective_from',)
+        constraints = [models.UniqueConstraint(fields=('model', 'effective_from'), name='unique_model_pricing_date')]
+
+    def __str__(self):
+        return f'{self.model} desde {self.effective_from:%Y-%m-%d} ({self.currency})'
 
 
 class Reading(models.Model):
@@ -32,7 +51,14 @@ class Reading(models.Model):
     mode = models.CharField(max_length=10, choices=Mode.choices, default=Mode.CLASSIC)
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
     model_used = models.CharField(max_length=120, blank=True, null=True)
-    tokens_used = models.PositiveIntegerField(blank=True, null=True)
+    # Total histórico anterior a la separación entre entrada y salida.
+    legacy_tokens = models.PositiveIntegerField(blank=True, null=True)
+    input_tokens = models.PositiveIntegerField(blank=True, null=True)
+    output_tokens = models.PositiveIntegerField(blank=True, null=True)
+    cache_read_tokens = models.PositiveIntegerField(default=0)
+    cache_creation_tokens = models.PositiveIntegerField(default=0)
+    cost = models.DecimalField(max_digits=14, decimal_places=8, blank=True, null=True)
+    cost_currency = models.CharField(max_length=3, blank=True, default='')
     share_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     is_favorite = models.BooleanField(default=False)
@@ -48,3 +74,34 @@ class Reading(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.spread} - {self.created_at:%Y-%m-%d}'
+
+    def calculate_cost(self, at=None):
+        if not self.model_used or self.input_tokens is None or self.output_tokens is None:
+            return None
+        pricing = ModelPricing.objects.filter(
+            model=self.model_used,
+            effective_from__lte=at or self.created_at or timezone.now(),
+        ).order_by('-effective_from').first()
+        if pricing is None:
+            return None
+        total = (
+            Decimal(self.input_tokens) * pricing.input_price_per_million
+            + Decimal(self.output_tokens) * pricing.output_price_per_million
+            + Decimal(self.cache_read_tokens) * (
+                pricing.cache_read_price_per_million or pricing.input_price_per_million)
+            + Decimal(self.cache_creation_tokens) * (
+                pricing.cache_creation_price_per_million or pricing.input_price_per_million)
+        ) / Decimal(1_000_000)
+        return total.quantize(Decimal('0.00000001')), pricing.currency
+
+    def save(self, *args, **kwargs):
+        # Solo se fija una vez: los cambios posteriores en la tabla de precios no
+        # pueden modificar el costo histórico de una lectura ya contabilizada.
+        if self.cost is None:
+            calculated = self.calculate_cost()
+            if calculated:
+                self.cost, self.cost_currency = calculated
+                update_fields = kwargs.get('update_fields')
+                if update_fields is not None:
+                    kwargs['update_fields'] = tuple(set(update_fields) | {'cost', 'cost_currency'})
+        return super().save(*args, **kwargs)

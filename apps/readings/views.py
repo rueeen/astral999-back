@@ -1,6 +1,8 @@
 import logging
+from decimal import Decimal, InvalidOperation
 from random import choice, sample
 
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import FileResponse, Http404
 from rest_framework import generics, permissions, status
@@ -12,7 +14,7 @@ from rest_framework.views import APIView
 from apps.cards.models import TarotCard
 from .models import Reading
 from .serializers import ReadingSerializer, SharedReadingSerializer, SPREAD_CARD_COUNTS
-from .quotas import validate_quota
+from .quotas import current_month_cost, validate_quota
 from .services.ai import generate_reading
 from .services.share_image import get_or_render
 
@@ -51,6 +53,14 @@ class ReadingListCreateView(generics.ListCreateAPIView):
         spread = serializer.validated_data['spread']
         question = serializer.validated_data['question']
         validate_quota(self.request.user, spread)
+        try:
+            budget = Decimal(str(settings.MONTHLY_BUDGET))
+        except InvalidOperation as error:
+            raise ImproperlyConfigured('MONTHLY_BUDGET debe ser un número decimal.') from error
+        if budget > 0 and current_month_cost() >= budget:
+            raise ReadingServiceUnavailable(
+                'Se alcanzó el presupuesto mensual de generación. Inténtalo el próximo mes.'
+            )
         card_count = SPREAD_CARD_COUNTS[spread]
 
         cards = sample(list(TarotCard.objects.all()), card_count)
@@ -77,7 +87,7 @@ class ReadingListCreateView(generics.ListCreateAPIView):
                 mode=reading.mode,
                 user=self.request.user,
             )
-            text, model, tokens = result.text, result.model, result.tokens
+            text, model = result.text, result.model
             if not text.strip():
                 raise RuntimeError('Respuesta vacía')
         except ImproperlyConfigured:
@@ -91,9 +101,18 @@ class ReadingListCreateView(generics.ListCreateAPIView):
             raise ReadingServiceUnavailable() from error
         reading.ai_response = text
         reading.model_used = model
-        reading.tokens_used = tokens
+        reading.input_tokens = result.input_tokens
+        reading.output_tokens = result.output_tokens
+        reading.cache_read_tokens = result.cache_read_tokens
+        reading.cache_creation_tokens = result.cache_creation_tokens
+        calculated = reading.calculate_cost()
+        if calculated:
+            reading.cost, reading.cost_currency = calculated
         reading.status = Reading.Status.READY
-        reading.save(update_fields=('ai_response', 'model_used', 'tokens_used', 'status'))
+        reading.save(update_fields=(
+            'ai_response', 'model_used', 'input_tokens', 'output_tokens',
+            'cache_read_tokens', 'cache_creation_tokens', 'cost', 'cost_currency', 'status',
+        ))
 
 
 class ReadingDetailView(generics.RetrieveAPIView):
