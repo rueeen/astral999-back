@@ -1,19 +1,23 @@
 from datetime import UTC, datetime, timedelta
 from decimal import Decimal
+from io import BytesIO, StringIO
 from types import SimpleNamespace
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured
+from django.core.management import call_command
+from django.db import connection
 from django.test import override_settings
 from django.test import TestCase
+from django.test.utils import CaptureQueriesContext
 from tempfile import TemporaryDirectory
 from django.utils import timezone
 from rest_framework.test import APIClient
 
 from apps.cards.models import TarotCard
-from .models import ModelPricing, Reading
+from .models import AnthropicCostReconciliation, ApiTopUp, ModelPricing, Reading
 from .quotas import _period
 from .services.ai import AIResult
 from .services.ai import generate_reading
@@ -367,3 +371,64 @@ class CostAccountingTests(TestCase):
         self.assertEqual(response.status_code, 503)
         self.assertIn('presupuesto mensual', str(response.data['detail']))
         generate.assert_not_called()
+
+
+class AdminUsagePanelTests(TestCase):
+    def setUp(self):
+        self.staff = get_user_model().objects.create_user(username='staff-panel', email='staff-panel@example.com', is_staff=True)
+        self.user = get_user_model().objects.create_user(username='lector-panel', email='lector-panel@example.com')
+
+    def test_non_staff_user_receives_forbidden(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get('/admin/panel/')
+
+        self.assertEqual(response.status_code, 403)
+
+    @override_settings(LOW_BALANCE_THRESHOLD='95', MONTHLY_BUDGET='8')
+    def test_panel_calculates_estimated_balance_and_summaries(self):
+        now = timezone.now()
+        ApiTopUp.objects.create(date=now - timedelta(days=2), amount='100.00', note='Consola')
+        reading = make_reading(self.user, cost=Decimal('7.50000000'), cost_currency='USD')
+        Reading.objects.filter(pk=reading.pk).update(created_at=now - timedelta(days=1))
+        self.client.force_login(self.staff)
+
+        with CaptureQueriesContext(connection) as queries:
+            response = self.client.get('/admin/panel/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['estimated_balance'], Decimal('92.50000000'))
+        self.assertEqual(response.context['month_readings'], 1)
+        self.assertTrue(response.context['low_balance'])
+        self.assertTrue(response.context['over_budget'])
+        self.assertLessEqual(len(queries), 12)
+
+
+class SyncAnthropicCostsTests(TestCase):
+    @override_settings(ANTHROPIC_ADMIN_API_KEY='')
+    def test_missing_key_finishes_without_error(self):
+        output = StringIO()
+
+        call_command('sync_anthropic_costs', stdout=output)
+
+        self.assertIn('no está configurada', output.getvalue())
+        self.assertFalse(AnthropicCostReconciliation.objects.exists())
+
+    @override_settings(ANTHROPIC_ADMIN_API_KEY='sk-ant-admin-test')
+    @patch('apps.readings.management.commands.sync_anthropic_costs.urlopen')
+    def test_saves_reported_and_local_cost(self, urlopen):
+        user = get_user_model().objects.create_user(username='conciliacion')
+        make_reading(user, cost=Decimal('1.25000000'), cost_currency='USD')
+        urlopen.return_value = BytesIO(
+            b'{"data":[{"results":[{"currency":"USD","amount":"1.50"}]}],"has_more":false}'
+        )
+
+        call_command(
+            'sync_anthropic_costs', start=timezone.localdate(), end=timezone.localdate(),
+            stdout=StringIO(),
+        )
+
+        reconciliation = AnthropicCostReconciliation.objects.get()
+        self.assertEqual(reconciliation.reported_cost, Decimal('1.50000000'))
+        self.assertEqual(reconciliation.local_cost, Decimal('1.25000000'))
+        self.assertEqual(reconciliation.difference, Decimal('0.25000000'))

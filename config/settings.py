@@ -128,10 +128,12 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='', cast=Csv())
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
+ANTHROPIC_ADMIN_API_KEY = config('ANTHROPIC_ADMIN_API_KEY', default='')
 ANTHROPIC_MODEL = config('ANTHROPIC_MODEL', default='')
 ANTHROPIC_TIMEOUT = config('ANTHROPIC_TIMEOUT', default=30, cast=float)
 ANTHROPIC_PROXY = config('ANTHROPIC_PROXY', default='')
 MONTHLY_BUDGET = config('MONTHLY_BUDGET', default='0')
+LOW_BALANCE_THRESHOLD = config('LOW_BALANCE_THRESHOLD', default='0')
 _anthropic_temperature = config('ANTHROPIC_TEMPERATURE', default='')
 ANTHROPIC_TEMPERATURE = (
     float(_anthropic_temperature) if _anthropic_temperature != '' else None

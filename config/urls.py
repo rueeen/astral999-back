@@ -5,8 +5,10 @@ from django.urls import include, path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.views import TokenBlacklistView
 from apps.users.views import RegisterView
+from apps.readings.admin_panel import panel as admin_panel
 
 urlpatterns = [
+    path('admin/panel/', admin_panel, name='admin-usage-panel'),
     path('admin/', admin.site.urls),
     path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

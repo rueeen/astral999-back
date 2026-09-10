@@ -29,6 +29,8 @@ class SeedCardsTests(TestCase):
         for suit, _ in TarotCard.Suit.choices:
             self.assertEqual(TarotCard.objects.filter(suit=suit).count(), 14)
         self.assertEqual(TarotCard.objects.filter(is_court=True).count(), 16)
+        self.assertFalse(TarotCard.objects.filter(meaning_up='').exists())
+        self.assertFalse(TarotCard.objects.filter(meaning_rev='').exists())
         self.assertEqual(
             TarotCard.objects.values('slug').distinct().count(),
             TarotCard.objects.count(),
