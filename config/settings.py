@@ -134,6 +134,8 @@ ANTHROPIC_TIMEOUT = config('ANTHROPIC_TIMEOUT', default=30, cast=float)
 ANTHROPIC_PROXY = config('ANTHROPIC_PROXY', default='')
 MONTHLY_BUDGET = config('MONTHLY_BUDGET', default='0')
 LOW_BALANCE_THRESHOLD = config('LOW_BALANCE_THRESHOLD', default='0')
+TRIAL_MODE = config('TRIAL_MODE', default=False, cast=bool)
+TRIAL_ENDS_AT = config('TRIAL_ENDS_AT', default='')
 _anthropic_temperature = config('ANTHROPIC_TEMPERATURE', default='')
 ANTHROPIC_TEMPERATURE = (
     float(_anthropic_temperature) if _anthropic_temperature != '' else None
