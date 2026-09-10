@@ -4,7 +4,7 @@ from anthropic import Anthropic, DefaultHttpxClient
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-from .prompts import build_system_prompt
+from .prompts import SPREAD_POSITIONS, build_system_prompt
 
 
 @dataclass(frozen=True)
@@ -31,10 +31,12 @@ def generate_reading(*, question, spread, cards, mode, user):
     card_lines = []
     for drawn in cards:
         card = drawn['card']
+        position = SPREAD_POSITIONS[spread][drawn['position'] - 1]
         orientation = 'invertida' if drawn['reversed'] else 'derecha'
         meaning = card.meaning_rev if drawn['reversed'] else card.meaning_up
         card_lines.append(
-            f"Posición {drawn['position']}: {card.name} ({orientation}). Significado: {meaning}"
+            f"Posición {drawn['position']} — {position}. "
+            f"Carta: {card.name} ({orientation}). Significado: {meaning}"
         )
     astrology = (
         f"Signo: {user.get_zodiac_sign() or 'no informado'}; "
@@ -43,6 +45,8 @@ def generate_reading(*, question, spread, cards, mode, user):
     )
     prompt = (
         f'Pregunta: {question}\nTirada: {spread}\nContexto astrológico: {astrology}\n'
+        'Interpreta cada carta en función de su posición: la misma carta dice cosas distintas '
+        'en «obstáculo» y en «desenlace».\n'
         f"Cartas:\n" + '\n'.join(card_lines)
     )
     client_options = dict(
