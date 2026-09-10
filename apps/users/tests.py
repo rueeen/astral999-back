@@ -65,3 +65,14 @@ class UserUpdateTests(APITestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(str(response.data['email'][0]), 'Ya existe una cuenta con este email.')
+
+    def test_new_user_uses_neutral_treatment_by_default(self):
+        new_user = get_user_model().objects.create_user(username='neutral')
+        self.assertEqual(new_user.address_as, 'neutral')
+
+    def test_can_patch_treatment_without_sending_full_profile(self):
+        response = self.client.patch(self.url, {'address_as': 'feminine'}, format='json')
+
+        self.assertEqual(response.status_code, 200)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.address_as, 'feminine')

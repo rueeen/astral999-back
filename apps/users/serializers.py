@@ -53,6 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'username', 'email',
             'first_name', 'last_name', 'bio', 'avatar',
             'birth_date', 'birth_time', 'birth_place',
+            'address_as',
             'zodiac_sign',
         )
         read_only_fields = ('id', 'username', 'zodiac_sign')

@@ -20,11 +20,13 @@ class ReadingSerializer(serializers.ModelSerializer):
             'cards_drawn', 'cards_detail',
             'ai_response', 'mode', 'status', 'model_used', 'tokens_used',
             'share_token', 'created_at', 'is_favorite',
+            'is_public', 'address_as',
         )
         read_only_fields = (
             'id', 'user', 'cards_drawn', 'cards_detail',
             'ai_response', 'status', 'model_used', 'tokens_used',
             'share_token', 'created_at', 'is_favorite',
+            'address_as',
         )
 
     def validate_spread(self, value):

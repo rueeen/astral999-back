@@ -4,6 +4,11 @@ import uuid
 
 
 class Reading(models.Model):
+    class AddressAs(models.TextChoices):
+        MASCULINE = 'masculine', 'Masculino'
+        FEMININE = 'feminine', 'Femenino'
+        NEUTRAL = 'neutral', 'Neutro'
+
     class Mode(models.TextChoices):
         CLASSIC = 'classic', 'Clásico'
         NEGATIVE = 'negative', 'Negativo'
@@ -31,6 +36,11 @@ class Reading(models.Model):
     share_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     is_favorite = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=True)
+    address_as = models.CharField(
+        'preferencia de tratamiento al generar', max_length=10,
+        choices=AddressAs.choices, default=AddressAs.NEUTRAL, editable=False,
+    )
 
     class Meta:
         ordering = ('-created_at',)

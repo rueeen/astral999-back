@@ -4,7 +4,7 @@ from anthropic import Anthropic
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-from .prompts import SYSTEM_PROMPTS
+from .prompts import build_system_prompt
 
 
 @dataclass(frozen=True)
@@ -45,7 +45,7 @@ def generate_reading(*, question, spread, cards, mode, user):
     request_options = dict(
         model=settings.ANTHROPIC_MODEL,
         max_tokens=1200,
-        system=SYSTEM_PROMPTS[mode],
+        system=build_system_prompt(mode, user.address_as),
         messages=[{'role': 'user', 'content': prompt}],
     )
     # Los modelos Anthropic de generación 5 solo aceptan la temperatura predeterminada.
