@@ -12,9 +12,43 @@ class ModelPricingAdmin(admin.ModelAdmin):
 
 @admin.register(Reading)
 class ReadingAdmin(admin.ModelAdmin):
-    list_display = ('user', 'spread', 'mode', 'status', 'cost', 'cost_currency', 'created_at')
-    list_filter = ('spread', 'mode', 'status', 'is_favorite', 'created_at')
+    list_display = ('user', 'spread', 'mode', 'feedback_value', 'is_exemplar', 'status', 'cost', 'cost_currency', 'created_at')
+    list_filter = ('spread', 'mode', 'feedback__value', 'is_exemplar', 'status', 'is_favorite', 'created_at')
     search_fields = ('user__username', 'question', 'ai_response')
+    actions = ('mark_as_exemplar', 'unmark_as_exemplar')
+    list_select_related = ('user',)
+
+    @admin.display(description='valoración', ordering='feedback__value')
+    def feedback_value(self, obj):
+        feedback = next(iter(obj.feedback.all()), None)
+        return feedback.get_value_display() if feedback else '—'
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('feedback')
+
+    def save_model(self, request, obj, form, change):
+        previous_mode = None
+        if change:
+            previous_mode = Reading.objects.filter(pk=obj.pk).values_list('mode', flat=True).first()
+        super().save_model(request, obj, form, change)
+        from django.core.cache import cache
+        cache.delete_many({f'reading-exemplars:{mode}' for mode in (previous_mode, obj.mode) if mode})
+
+    @admin.action(description='Marcar como ejemplares')
+    def mark_as_exemplar(self, request, queryset):
+        queryset.update(is_exemplar=True)
+        self._clear_exemplar_cache(queryset)
+
+    @admin.action(description='Desmarcar como ejemplares')
+    def unmark_as_exemplar(self, request, queryset):
+        queryset.update(is_exemplar=False)
+        self._clear_exemplar_cache(queryset)
+
+    @staticmethod
+    def _clear_exemplar_cache(queryset):
+        from django.core.cache import cache
+        for mode in queryset.values_list('mode', flat=True).distinct():
+            cache.delete(f'reading-exemplars:{mode}')
 
 
 @admin.register(ReadingFeedback)

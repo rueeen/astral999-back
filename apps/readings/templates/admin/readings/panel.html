@@ -9,6 +9,9 @@
   .chart-card { min-height:300px; } .chart-card canvas { max-height:250px; }
   .notice { border-left:5px solid #ba2121; margin:12px 0; }
   .balance { border-left:5px solid var(--primary); }
+  .feedback-table { width:100%; border-collapse:collapse; margin:12px 0 24px; }
+  .feedback-table th, .feedback-table td { border-bottom:1px solid var(--hairline-color); padding:10px; text-align:left; }
+  .comment { max-width:700px; white-space:normal; }
 </style>
 {% endblock %}
 
@@ -25,6 +28,29 @@
   <div class="metric"><span>Costo medio por lectura</span><strong>USD {{ average_cost|floatformat:4 }}</strong></div>
   <div class="metric"><span>Usuarios activos este mes</span><strong>{{ month_users }}</strong></div>
 </div>
+
+<h2>Feedback</h2>
+<div class="summary-grid">
+  <div class="metric"><span>Lecturas con valoración</span><strong>{{ participation_rate|floatformat:1 }} %</strong><small>{{ rated_readings }} lecturas</small></div>
+  <div class="metric"><span>Valoraciones totales</span><strong>{{ feedback_total }}</strong></div>
+</div>
+<div class="chart-grid">
+  <div class="chart-card"><h2>Valoración por modo</h2>
+    <table class="feedback-table"><thead><tr><th>Modo</th><th>Likes</th><th>Dislikes</th><th>Likes</th></tr></thead><tbody>
+    {% for row in feedback_by_mode %}<tr><td>{{ row.mode }}</td><td>{{ row.likes }}</td><td>{{ row.dislikes }}</td><td>{{ row.like_rate|floatformat:1 }} %</td></tr>{% empty %}<tr><td colspan="4">Sin valoraciones</td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+  <div class="chart-card"><h2>Valoración por tirada</h2>
+    <table class="feedback-table"><thead><tr><th>Tirada</th><th>Likes</th><th>Dislikes</th><th>Likes</th></tr></thead><tbody>
+    {% for row in feedback_by_spread %}<tr><td>{{ row.spread }}</td><td>{{ row.likes }}</td><td>{{ row.dislikes }}</td><td>{{ row.like_rate|floatformat:1 }} %</td></tr>{% empty %}<tr><td colspan="4">Sin valoraciones</td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+  <div class="chart-card"><h2>Evolución semanal</h2><canvas id="feedback-weeks"></canvas></div>
+</div>
+<h2>Comentarios recientes</h2>
+<table class="feedback-table"><thead><tr><th>Fecha</th><th>Voto</th><th>Modo</th><th>Comentario</th></tr></thead><tbody>
+{% for feedback in recent_comments %}<tr><td>{{ feedback.created_at|date:"d/m/Y H:i" }}</td><td>{{ feedback.get_value_display }}</td><td>{{ feedback.reading.get_mode_display }}</td><td class="comment">{{ feedback.comment }}</td></tr>{% empty %}<tr><td colspan="4">Sin comentarios</td></tr>{% endfor %}
+</tbody></table>
 <div class="metric balance">
   <span>Saldo estimado (cálculo local, no es el saldo oficial de Anthropic)</span>
   <strong>USD {{ estimated_balance|floatformat:4 }}</strong>
@@ -44,6 +70,7 @@
 {{ failures_by_day|json_script:"failures-data" }}
 {{ spreads|json_script:"spreads-data" }}
 {{ active_users|json_script:"users-data" }}
+{{ feedback_by_week|json_script:"feedback-week-data" }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script>
   const data = id => JSON.parse(document.getElementById(id).textContent);
@@ -60,5 +87,10 @@
   const failureRows=data('failures-data'); line('failures',days(failureRows),[{label:'Fallos (%)',borderColor:'#ba2121',data:failureRows.map(row=>row.total?row.failed*100/row.total:0)}],{scales:{y:{min:0,max:100}}});
   const spreadRows=data('spreads-data'); new Chart(document.getElementById('spreads'),{type:'doughnut',data:{labels:spreadRows.map(row=>row.spread),datasets:[{data:spreadRows.map(row=>row.count)}]},options:{maintainAspectRatio:false}});
   const userRows=data('users-data'); line('users',days(userRows),[{label:'Usuarios',borderColor:'#5b8c5a',data:userRows.map(row=>row.count)}]);
+  const feedbackRows=data('feedback-week-data'), feedbackWeeks=feedbackRows.map(row=>row.week);
+  line('feedback-weeks',feedbackWeeks,[
+    {label:'Likes',borderColor:'#5b8c5a',data:feedbackRows.map(row=>row.likes)},
+    {label:'Dislikes',borderColor:'#ba2121',data:feedbackRows.map(row=>row.dislikes)},
+  ]);
 </script>
 {% endblock %}

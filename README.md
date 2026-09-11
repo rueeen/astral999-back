@@ -226,6 +226,8 @@ une en `meaning_up` y deja un marcador genérico inequívoco en `meaning_rev`; n
 
 Un usuario autenticado crea o reemplaza su voto con `POST` o `PUT` a
 `/api/readings/<id>/feedback/` enviando `{"value": 1, "comment": "..."}` (o `-1`).
+También puede actualizar parcialmente una valoración existente con `PATCH`; si todavía no
+existe una valoración, este método devuelve 404.
 El resumen está disponible en `GET /api/readings/<id>/feedback/summary/`.
 
 Las generaciones incluyen hasta tres lecturas positivas del mismo tipo como referencias de
@@ -240,3 +242,15 @@ python manage.py export_feedback_dataset --min-score 1 --limit 100 --output feed
 
 El archivo es una base para few-shot. Antes de un eventual fine-tuning con otro proveedor debe
 anonimizarse, revisarse y versionarse; no debe enviarse automáticamente a un modelo.
+
+## Lecturas ejemplares
+
+El administrador puede marcar manualmente lecturas como ejemplares. Con `USE_EXEMPLARS=True`,
+el prompt incorpora como máximo dos ejemplos del mismo modo, limitados en conjunto por
+`EXEMPLAR_MAX_CHARACTERS` (4000 por defecto). La selección se cachea durante una hora y las
+acciones masivas del administrador invalidan inmediatamente esa caché.
+
+**Privacidad:** los ejemplos proceden de lecturas de usuarios reales. Antes de marcar una
+lectura hay que comprobar que su pregunta no contenga nombres propios ni ningún otro dato
+personal identificable o detalle privado: ese contenido pasa al prompt del sistema y podría
+influir en lecturas de otras personas.

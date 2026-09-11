@@ -142,6 +142,8 @@ ANTHROPIC_TEMPERATURE = (
 )
 # Cantidad de ejemplos positivos que se añaden como referencia de estilo (0-3).
 FEEDBACK_FEW_SHOT_EXAMPLES = config('FEEDBACK_FEW_SHOT_EXAMPLES', default=3, cast=int)
+USE_EXEMPLARS = config('USE_EXEMPLARS', default=False, cast=bool)
+EXEMPLAR_MAX_CHARACTERS = config('EXEMPLAR_MAX_CHARACTERS', default=4000, cast=int)
 
 READING_PLAN_LIMITS = {
     'free': {
