@@ -195,7 +195,15 @@ class ReadingFeedbackView(APIView):
 
     def post(self, request, pk):
         reading = self.get_reading(request, pk)
-        serializer = ReadingFeedbackSerializer(data=request.data)
+        existing = ReadingFeedback.objects.filter(reading=reading, user=request.user).first()
+        if request.method == 'PATCH' and existing is None:
+            return Response(
+                {'detail': 'No existe una valoración que actualizar.'},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = ReadingFeedbackSerializer(
+            existing, data=request.data, partial=request.method == 'PATCH',
+        )
         serializer.is_valid(raise_exception=True)
         generation_context = {
             'question': reading.question,
@@ -208,7 +216,8 @@ class ReadingFeedbackView(APIView):
         feedback, created = ReadingFeedback.objects.update_or_create(
             reading=reading,
             user=request.user,
-            defaults={**serializer.validated_data, 'generation_context': generation_context},
+            defaults=serializer.validated_data,
+            create_defaults={**serializer.validated_data, 'generation_context': generation_context},
         )
         return Response(
             ReadingFeedbackSerializer(feedback).data,
@@ -216,6 +225,7 @@ class ReadingFeedbackView(APIView):
         )
 
     put = post
+    patch = post
 
 
 class ReadingFeedbackSummaryView(APIView):

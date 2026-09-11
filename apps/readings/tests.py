@@ -220,6 +220,28 @@ class ReadingAPITests(TestCase):
         self.assertEqual(feedback.generation_context['question'], reading.question)
         self.assertEqual(feedback.generation_context['mode'], Reading.Mode.NEGATIVE)
 
+    def test_patch_updates_only_comment_and_preserves_value_and_snapshot(self):
+        reading = make_reading(self.user, mode=Reading.Mode.ROAST)
+        url = f'/api/readings/{reading.pk}/feedback/'
+        self.client.post(url, {'value': 1, 'comment': 'Original.'})
+        feedback = ReadingFeedback.objects.get(reading=reading)
+        snapshot = feedback.generation_context
+
+        response = self.client.patch(url, {'comment': 'Comentario actualizado.'})
+
+        self.assertEqual(response.status_code, 200)
+        feedback.refresh_from_db()
+        self.assertEqual(feedback.value, ReadingFeedback.Value.LIKE)
+        self.assertEqual(feedback.comment, 'Comentario actualizado.')
+        self.assertEqual(feedback.generation_context, snapshot)
+
+    def test_patch_without_existing_feedback_returns_404(self):
+        reading = make_reading(self.user)
+        response = self.client.patch(
+            f'/api/readings/{reading.pk}/feedback/', {'comment': 'Sin voto previo.'},
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_feedback_rejects_invalid_value_and_other_users_reading(self):
         own_reading = make_reading(self.user)
         other_reading = make_reading(self.other_user)
@@ -275,6 +297,37 @@ class FeedbackDatasetTests(TestCase):
 
 
 class TreatmentPromptTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    @override_settings(USE_EXEMPLARS=True, EXEMPLAR_MAX_CHARACTERS=4000)
+    def test_prompt_contains_at_most_two_exemplars_from_same_mode(self):
+        user = get_user_model().objects.create_user(username='ejemplos')
+        for index in range(3):
+            make_reading(user, question=f'Pregunta ejemplar {index}',
+                         ai_response=f'Lectura ejemplar {index}', is_exemplar=True)
+        make_reading(user, question='Pregunta roast privada', ai_response='Roast ajeno',
+                     mode=Reading.Mode.ROAST, is_exemplar=True)
+
+        prompt = build_system_prompt(Reading.Mode.CLASSIC)
+
+        self.assertEqual(prompt.count('Pregunta ejemplar'), 2)
+        self.assertNotIn('Roast ajeno', prompt)
+
+    @override_settings(USE_EXEMPLARS=False, EXEMPLAR_MAX_CHARACTERS=4000)
+    def test_exemplars_can_be_disabled(self):
+        user = get_user_model().objects.create_user(username='sin-ejemplos')
+        make_reading(user, ai_response='Texto que no debe aparecer', is_exemplar=True)
+        self.assertNotIn('Texto que no debe aparecer', build_system_prompt(Reading.Mode.CLASSIC))
+
+    @override_settings(USE_EXEMPLARS=True, EXEMPLAR_MAX_CHARACTERS=180)
+    def test_exemplar_section_respects_character_limit(self):
+        user = get_user_model().objects.create_user(username='limite-ejemplos')
+        make_reading(user, question='Q' * 200, ai_response='R' * 500, is_exemplar=True)
+        base = build_system_prompt(Reading.Mode.CLASSIC)
+        with override_settings(USE_EXEMPLARS=False):
+            without_examples = build_system_prompt(Reading.Mode.CLASSIC)
+        self.assertLessEqual(len(base) - len(without_examples), 180)
     def test_prompts_preserve_safety_restrictions(self):
         for mode in Reading.Mode.values:
             with self.subTest(mode=mode):
@@ -551,7 +604,25 @@ class AdminUsagePanelTests(TestCase):
         self.assertEqual(response.context['month_readings'], 1)
         self.assertTrue(response.context['low_balance'])
         self.assertTrue(response.context['over_budget'])
-        self.assertLessEqual(len(queries), 12)
+        # Cada bloque de feedback usa una agregación independiente y acotada.
+        self.assertLessEqual(len(queries), 17)
+
+    def test_feedback_by_mode_matches_total(self):
+        readings = [
+            make_reading(self.user, mode=mode)
+            for mode in Reading.Mode.values
+        ]
+        for reading, value in zip(readings, (1, -1, 1)):
+            ReadingFeedback.objects.create(reading=reading, user=self.user, value=value)
+        self.client.force_login(self.staff)
+
+        response = self.client.get('/admin/panel/')
+
+        self.assertEqual(len(response.context['feedback_by_mode']), 3)
+        self.assertEqual(
+            sum(row['total'] for row in response.context['feedback_by_mode']),
+            response.context['feedback_total'],
+        )
 
 
 class SyncAnthropicCostsTests(TestCase):

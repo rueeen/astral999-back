@@ -230,6 +230,30 @@ ADDRESS_INSTRUCTIONS = {
 }
 
 
+def _exemplar_section(mode):
+    from django.conf import settings
+    from django.core.cache import cache
+    from apps.readings.models import Reading
+
+    if not settings.USE_EXEMPLARS or settings.EXEMPLAR_MAX_CHARACTERS <= 0:
+        return ''
+    key = f'reading-exemplars:{mode}'
+    examples = cache.get(key)
+    if examples is None:
+        examples = list(Reading.objects.filter(
+            mode=mode, is_exemplar=True, status=Reading.Status.READY,
+        ).order_by('-created_at').values_list('question', 'ai_response')[:2])
+        cache.set(key, examples, timeout=3600)
+    if not examples:
+        return ''
+    heading = ('\n\nMuestras del registro buscado; imita su tono y estructura, '
+               'pero no reutilices su contenido:\n')
+    parts = [f'\nEjemplo {index}\nPregunta: {question}\nLectura: {answer}'
+             for index, (question, answer) in enumerate(examples, 1)]
+    return (heading + ''.join(parts))[:settings.EXEMPLAR_MAX_CHARACTERS]
+
+
 def build_system_prompt(mode, address_as='neutral'):
     """Construye el prompt con la preferencia de tratamiento vigente."""
-    return f'{SYSTEM_PROMPTS[mode]}\n{ADDRESS_INSTRUCTIONS.get(address_as, ADDRESS_INSTRUCTIONS["neutral"])}'
+    prompt = f'{SYSTEM_PROMPTS[mode]}\n{ADDRESS_INSTRUCTIONS.get(address_as, ADDRESS_INSTRUCTIONS["neutral"])}'
+    return prompt + _exemplar_section(mode)
